@@ -14,7 +14,7 @@ import javax.persistence.Table;
 @Table(name = Bait.TABLE_NAME)
 @GeneratePropertyNames
 public class Bait implements Serializable {
-  public static final String TABLE_NAME = "bait";
+  public static final String TABLE_NAME = "Bait";
   private static final long serialVersionUID = 7069067891007593075L;
 
   /**

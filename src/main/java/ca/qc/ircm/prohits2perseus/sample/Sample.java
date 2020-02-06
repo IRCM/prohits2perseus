@@ -16,7 +16,7 @@ import javax.persistence.Table;
 @Table(name = Sample.TABLE_NAME)
 @GeneratePropertyNames
 public class Sample implements Serializable {
-  public static final String TABLE_NAME = "band";
+  public static final String TABLE_NAME = "Band";
   private static final long serialVersionUID = 1723224097702204200L;
 
   /**
