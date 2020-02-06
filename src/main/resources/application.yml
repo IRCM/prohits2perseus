@@ -48,3 +48,5 @@ version: $[project.version]
 ---
 spring:
   profiles: test
+  jpa:
+    show-sql: false
