@@ -29,6 +29,11 @@ public class Bait implements Serializable {
   @Column(name = "genename")
   private String name;
 
+  @Override
+  public String toString() {
+    return "Bait [id=" + id + ", name=" + name + "]";
+  }
+
   public Long getId() {
     return id;
   }

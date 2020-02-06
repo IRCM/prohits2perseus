@@ -37,6 +37,11 @@ public class Sample implements Serializable {
   @JoinColumn(name = "baitid")
   private Bait bait;
 
+  @Override
+  public String toString() {
+    return "Sample [id=" + id + ", name=" + name + "]";
+  }
+
   public Long getId() {
     return id;
   }
