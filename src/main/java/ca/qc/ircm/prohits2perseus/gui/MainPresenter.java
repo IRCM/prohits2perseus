@@ -22,18 +22,20 @@ import javafx.concurrent.Worker.State;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Tooltip;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
+import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
+import javafx.util.converter.DefaultStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
@@ -54,10 +56,6 @@ public class MainPresenter {
   @FXML
   private Label file;
   @FXML
-  private Pane baitPane;
-  @FXML
-  private TextField bait;
-  @FXML
   private TableView<Sample> samples;
   @FXML
   private TableColumn<Sample, Long> sampleId;
@@ -66,8 +64,21 @@ public class MainPresenter {
   @FXML
   private TableColumn<Sample, String> sampleBait;
   @FXML
+  private TableColumn<Sample, Boolean> sampleControl;
+  @FXML
   private TableColumn<Sample, String> samplePerseus;
+  @FXML
+  private Pane normalizationPane;
+  @FXML
+  private CheckBox normalization;
+  @FXML
+  private Pane genePane;
+  @FXML
+  private TextField gene;
+  @FXML
+  private Label geneError;
   private FileChooser fileChooser = new FileChooser();
+  private SampleCompareMetadata metadata;
   private final ParseSampleCompareTaskFactory parseFactory;
   private final FetchSamplesTaskFactory fetchSamplesFactory;
 
@@ -86,8 +97,13 @@ public class MainPresenter {
         sample.getValue() != null ? sample.getValue().getName() : null));
     sampleBait.setCellValueFactory(sample -> new SimpleStringProperty(
         sample.getValue() != null ? sample.getValue().getBait().getName() : null));
-    samplePerseus.setCellFactory(column -> new PerseusCell<>());
+    sampleControl.setCellFactory(column -> new CheckBoxTableCell<>());
+    sampleControl.setCellValueFactory(new PropertyValueFactory<>("control"));
+    samplePerseus.setCellFactory(column -> new TextFieldTableCell<>(new DefaultStringConverter()));
     samplePerseus.setCellValueFactory(new PropertyValueFactory<>("perseus"));
+    gene.disableProperty().bind(normalization.selectedProperty().not());
+    gene.textProperty().addListener(e -> validateGene());
+    geneError.setVisible(false);
   }
 
   @FXML
@@ -118,7 +134,10 @@ public class MainPresenter {
       new Alert(Alert.AlertType.ERROR, resources.message("parseError", file.getName()))
           .showAndWait();
     });
-    task.setOnSucceeded(e -> Platform.runLater(() -> fetchSamples(task.getValue(), file)));
+    task.setOnSucceeded(e -> {
+      metadata = task.getValue();
+      Platform.runLater(() -> fetchSamples(metadata, file));
+    });
     new Thread(task).start();
   }
 
@@ -156,54 +175,22 @@ public class MainPresenter {
     return bait + "_" + format.format(lowerConflicts + 1);
   }
 
-  @FXML
-  private void convert(ActionEvent event) {
-  }
-
-  private class PerseusCell<S> extends TableCell<S, String> {
-    private final TextField textfield = new TextField();
-
-    private PerseusCell() {
-      getStyleClass().add("color-cell");
-      setGraphic(null);
-      textfield.setOnKeyPressed(e -> {
-        if (e.getCode() == KeyCode.ENTER) {
-          commitEdit(textfield.getText());
-        }
-      });
-    }
-
-    @Override
-    protected void updateItem(String value, boolean empty) {
-      super.updateItem(value, empty);
-      logger.debug("updateItem {}", value);
-      if (!empty) {
-        setText(value);
-        textfield.setText(value);
-      } else {
-        setText("");
-        textfield.setText("");
+  private boolean validateGene() {
+    genePane.getStyleClass().remove("error");
+    geneError.setVisible(false);
+    if (metadata != null) {
+      String gene = this.gene.getText();
+      if (!metadata.genes.contains(gene)) {
+        genePane.getStyleClass().add("error");
+        geneError.setVisible(true);
+        return false;
       }
     }
+    return true;
+  }
 
-    @Override
-    public void startEdit() {
-      super.startEdit();
-      setText("");
-      setGraphic(textfield);
-    }
-
-    @Override
-    public void cancelEdit() {
-      super.cancelEdit();
-      setText(getItem());
-      setGraphic(null);
-    }
-
-    @Override
-    public void commitEdit(String value) {
-      super.commitEdit(value);
-      setGraphic(null);
-    }
+  @FXML
+  private void convert(ActionEvent event) {
+    new Alert(Alert.AlertType.ERROR, "Convert not implemented yet").showAndWait();
   }
 }

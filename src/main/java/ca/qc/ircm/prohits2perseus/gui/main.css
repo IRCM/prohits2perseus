@@ -20,7 +20,7 @@
 .main-box {
 	-fx-spacing: 5px;
 }
-.prohits, .bait, .samples {
+.prohits, .samples, .normalization {
   -fx-border-color: black;
   -fx-border-radius: 5;
   -fx-border-style: solid;

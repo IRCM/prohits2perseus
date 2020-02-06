@@ -34,15 +34,6 @@
 	          <Label fx:id="file"/>
 	        </HBox>
 	      </VBox>
-        <VBox styleClass="bait">
-          <HBox styleClass="header">
-            <Label text="%bait"/>
-          </HBox>
-          <HBox fx:id="baitPane" styleClass="field-box">
-            <Label text="%bait.name"/>
-            <TextField fx:id="bait"/>
-          </HBox>
-        </VBox>
         <VBox styleClass="samples">
           <HBox styleClass="header">
             <Label text="%samples"/>
@@ -52,9 +43,23 @@
               <TableColumn fx:id="sampleId" text="%sample.id" prefWidth="80"/>
               <TableColumn fx:id="sampleName" text="%sample.name" prefWidth="200"/>
               <TableColumn fx:id="sampleBait" text="%sample.bait" prefWidth="200"/>
+              <TableColumn fx:id="sampleControl" text="%sample.control" prefWidth="50"/>
               <TableColumn fx:id="samplePerseus" text="%sample.perseus" prefWidth="250"/>
             </columns>
           </TableView>
+        </VBox>
+        <VBox styleClass="normalization">
+          <HBox styleClass="header">
+            <Label text="%normalization.header"/>
+          </HBox>
+          <HBox fx:id="normalizationPane" styleClass="field-box">
+            <CheckBox fx:id="normalization" text="%normalization"/>
+          </HBox>
+          <HBox fx:id="genePane" styleClass="field-box">
+            <Label text="%gene"/>
+            <TextField fx:id="gene"/>
+            <Label fx:id="geneError" text="%gene.error"/>
+          </HBox>
         </VBox>
 	    </VBox>
     </ScrollPane>

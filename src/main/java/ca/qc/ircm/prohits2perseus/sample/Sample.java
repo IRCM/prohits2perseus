@@ -2,6 +2,8 @@ package ca.qc.ircm.prohits2perseus.sample;
 
 import ca.qc.ircm.processing.GeneratePropertyNames;
 import java.io.Serializable;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javax.persistence.Column;
@@ -40,6 +42,11 @@ public class Sample implements Serializable {
   @JoinColumn(name = "baitid")
   private Bait bait;
   /**
+   * Sample is a control.
+   */
+  @Transient
+  private BooleanProperty control = new SimpleBooleanProperty();
+  /**
    * Name in Perseus.
    */
   @Transient
@@ -72,6 +79,18 @@ public class Sample implements Serializable {
 
   public void setBait(Bait bait) {
     this.bait = bait;
+  }
+
+  public BooleanProperty controlProperty() {
+    return control;
+  }
+
+  public boolean getControl() {
+    return control.get();
+  }
+
+  public void setControl(boolean control) {
+    this.control.set(control);
   }
 
   public StringProperty perseusProperty() {
