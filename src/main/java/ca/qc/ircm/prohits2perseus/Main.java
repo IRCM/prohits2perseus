@@ -17,44 +17,14 @@
 
 package ca.qc.ircm.prohits2perseus;
 
-import ca.qc.ircm.javafx.JavafxUtils;
 import ca.qc.ircm.prohits2perseus.gui.MainPreloader;
-import ca.qc.ircm.prohits2perseus.gui.MainView;
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
  * Starts program.
  */
-@SpringBootApplication
-public class Main extends AbstractSpringBootJavafxApplication {
-  @Override
-  public void init() throws Exception {
-    super.init();
-    com.airhacks.afterburner.injection.Injector
-        .setInstanceSupplier(clazz -> applicationContext.getBean(clazz));
-  }
-
-  @Override
-  public void start(Stage stage) throws Exception {
-    MainView view = new MainView();
-    Pane root = (Pane) view.getView();
-    root.setPrefHeight(800);
-    root.setPrefWidth(1500);
-    stage.setTitle(view.getResourceBundle().getString("title"));
-    Scene scene = new Scene(view.getView());
-    scene.getStylesheets().add("application.css");
-    stage.setScene(scene);
-    JavafxUtils.setMaxSizeForScreen(stage);
-    notifyPreloader(new ApplicationStarted());
-    stage.show();
-  }
-
+public class Main {
   public static void main(String[] args) {
     System.setProperty("javafx.preloader", MainPreloader.class.getName());
-    Application.launch(args);
+    javafx.application.Application.launch(MainApplication.class, args);
   }
 }
