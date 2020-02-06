@@ -16,9 +16,9 @@
 --
 
 INSERT INTO Bait (ID,GeneName)
-VALUES (1,'POLR2A');
+VALUES (1,'POLR3B');
 INSERT INTO Bait (ID,GeneName)
-VALUES (2,'POLR2A-R120S');
+VALUES (2,'POLR3B-R120S');
 INSERT INTO Bait (ID,GeneName)
 VALUES (3,'Flag');
 INSERT INTO Band (ID,BaitID,Location)

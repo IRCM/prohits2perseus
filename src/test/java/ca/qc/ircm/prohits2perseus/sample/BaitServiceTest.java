@@ -19,7 +19,7 @@ public class BaitServiceTest {
   public void get() {
     Bait bait = service.get(1L);
     assertEquals(1L, bait.getId());
-    assertEquals("POLR2A", bait.getName());
+    assertEquals("POLR3B", bait.getName());
   }
 
   @Test
