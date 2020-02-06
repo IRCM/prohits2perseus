@@ -40,8 +40,8 @@ public class MainApplication extends AbstractSpringBootJavafxApplication {
   public void start(Stage stage) throws Exception {
     MainView view = new MainView();
     Pane root = (Pane) view.getView();
-    root.setPrefHeight(800);
-    root.setPrefWidth(1500);
+    root.setPrefHeight(600);
+    root.setPrefWidth(800);
     stage.setTitle(view.getResourceBundle().getString("title"));
     Scene scene = new Scene(view.getView());
     scene.getStylesheets().add("application.css");

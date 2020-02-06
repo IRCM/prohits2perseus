@@ -23,13 +23,41 @@
 
 <BorderPane fx:id="view" styleClass="main" fx:controller="ca.qc.ircm.prohits2perseus.gui.MainPresenter" xmlns:fx="http://javafx.com/fxml">
   <center>
-    <VBox styleClass="main-box">
-      <HBox fx:id="filePane" styleClass="field-box">
-        <Label text="%file"/>
-        <Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
-        <Label fx:id="file"/>
-      </HBox>
-    </VBox>
+    <ScrollPane>
+	    <VBox styleClass="main-box">
+	      <VBox styleClass="prohits">
+	        <HBox styleClass="header">
+	          <Label text="%file"/>
+	        </HBox>
+	        <HBox fx:id="filePane" styleClass="field-box">
+	          <Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
+	          <Label fx:id="file"/>
+	        </HBox>
+	      </VBox>
+        <VBox styleClass="bait">
+          <HBox styleClass="header">
+            <Label text="%bait"/>
+          </HBox>
+          <HBox fx:id="baitPane" styleClass="field-box">
+            <Label text="%bait.name"/>
+            <TextField fx:id="bait"/>
+          </HBox>
+        </VBox>
+        <VBox styleClass="samples">
+          <HBox styleClass="header">
+            <Label text="%samples"/>
+          </HBox>
+          <TableView fx:id="samples" prefHeight="300">
+            <columns>
+              <TableColumn fx:id="sampleId" text="%sample.id" prefWidth="100"/>
+              <TableColumn fx:id="sampleName" text="%sample.name" prefWidth="200"/>
+              <TableColumn fx:id="sampleBait" text="%sample.bait" prefWidth="200"/>
+              <TableColumn fx:id="samplePerseus" text="%sample.perseus" prefWidth="200"/>
+            </columns>
+          </TableView>
+        </VBox>
+	    </VBox>
+    </ScrollPane>
   </center>
   <bottom>
     <HBox styleClass="buttons">

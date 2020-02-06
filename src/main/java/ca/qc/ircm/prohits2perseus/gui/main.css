@@ -14,21 +14,38 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <http://www.gnu.org/licenses/>.
  */
-.main .main-box {
+.scroll-pane {
+  -fx-fit-to-width: true;
+}
+.main-box {
 	-fx-spacing: 5px;
+}
+.prohits, .bait, .samples {
+  -fx-border-color: black;
+  -fx-border-radius: 5;
+  -fx-border-style: solid;
+  -fx-border-width: 1;
+  -fx-spacing: 15;
+  -fx-padding: 5;
+}
+.header {
+  -fx-spacing: 5px;
+}
+.header .label {
+  -fx-font: bold 16 sans-serif;
 }
 .main .field-box {
-	-fx-spacing: 5px;
-	-fx-alignment: center-left;
+  -fx-spacing: 5px;
+  -fx-alignment: center-left;
 }
-.main .buttons {
+.buttons {
 	-fx-border-color: black;
 	-fx-border-radius: 0;
 	-fx-border-style: solid;
 	-fx-border-width: 1 0 0 0;
 	-fx-padding: 3;
 }
-.main .buttons .button {
+.buttons .button {
 	-fx-font: italic bold 16 sans-serif;
 	-fx-graphic: url('dialog-ok-2_24.png');
 	-fx-graphic-text-gap: 10;
