@@ -49,10 +49,10 @@
           </HBox>
           <TableView fx:id="samples" prefHeight="300">
             <columns>
-              <TableColumn fx:id="sampleId" text="%sample.id" prefWidth="100"/>
+              <TableColumn fx:id="sampleId" text="%sample.id" prefWidth="80"/>
               <TableColumn fx:id="sampleName" text="%sample.name" prefWidth="200"/>
               <TableColumn fx:id="sampleBait" text="%sample.bait" prefWidth="200"/>
-              <TableColumn fx:id="samplePerseus" text="%sample.perseus" prefWidth="200"/>
+              <TableColumn fx:id="samplePerseus" text="%sample.perseus" prefWidth="250"/>
             </columns>
           </TableView>
         </VBox>

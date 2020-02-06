@@ -2,12 +2,15 @@ package ca.qc.ircm.prohits2perseus.sample;
 
 import ca.qc.ircm.processing.GeneratePropertyNames;
 import java.io.Serializable;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Sample.
@@ -36,6 +39,11 @@ public class Sample implements Serializable {
   @ManyToOne
   @JoinColumn(name = "baitid")
   private Bait bait;
+  /**
+   * Name in Perseus.
+   */
+  @Transient
+  private StringProperty perseus = new SimpleStringProperty();
 
   @Override
   public String toString() {
@@ -64,5 +72,17 @@ public class Sample implements Serializable {
 
   public void setBait(Bait bait) {
     this.bait = bait;
+  }
+
+  public StringProperty perseusProperty() {
+    return perseus;
+  }
+
+  public String getPerseus() {
+    return perseus.get();
+  }
+
+  public void setPerseus(String perseus) {
+    this.perseus.set(perseus);
   }
 }
