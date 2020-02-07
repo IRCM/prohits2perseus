@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @WebAppConfiguration
 @Transactional
-@Sql({ "/drop-schema.sql", "/schema.sql", "/sample-data.sql" })
+@Sql({ "/drop-schema.sql", "/schema.sql", "/user-data.sql", "/sample-data.sql" })
 public @interface ServiceTestAnnotations {
 
 }

@@ -1,6 +1,8 @@
 package ca.qc.ircm.prohits2perseus.sample;
 
 import ca.qc.ircm.processing.GeneratePropertyNames;
+import ca.qc.ircm.prohits2perseus.project.Project;
+import ca.qc.ircm.prohits2perseus.project.ProjectData;
 import java.io.Serializable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -20,7 +22,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = Sample.TABLE_NAME)
 @GeneratePropertyNames
-public class Sample implements Serializable {
+public class Sample implements Serializable, ProjectData {
   public static final String TABLE_NAME = "Band";
   private static final long serialVersionUID = 1723224097702204200L;
 
@@ -41,6 +43,12 @@ public class Sample implements Serializable {
   @ManyToOne
   @JoinColumn(name = "baitid")
   private Bait bait;
+  /**
+   * Project of this sample.
+   */
+  @ManyToOne
+  @JoinColumn(name = "projectid")
+  private Project project;
   /**
    * Sample is a control.
    */
@@ -103,5 +111,14 @@ public class Sample implements Serializable {
 
   public void setPerseus(String perseus) {
     this.perseus.set(perseus);
+  }
+
+  @Override
+  public Project getProject() {
+    return project;
+  }
+
+  public void setProject(Project project) {
+    this.project = project;
   }
 }

@@ -15,8 +15,17 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --
 
-DROP TABLE Band IF EXISTS;
-DROP TABLE Bait IF EXISTS;
-DROP TABLE ProPermission IF EXISTS;
-DROP TABLE Projects IF EXISTS;
-DROP TABLE User IF EXISTS;
+INSERT INTO User (ID,Username)
+VALUES (1,'poitrasc');
+INSERT INTO User (ID,Username)
+VALUES (2,'smithj');
+INSERT INTO Projects (ID,Name)
+VALUES (1,'Flag');
+INSERT INTO Projects (ID,Name)
+VALUES (2,'BioId');
+INSERT INTO ProPermission (ProjectID,UserID)
+VALUES (1,1);
+INSERT INTO ProPermission (ProjectID,UserID)
+VALUES (2,1);
+INSERT INTO ProPermission (ProjectID,UserID)
+VALUES (1,2);

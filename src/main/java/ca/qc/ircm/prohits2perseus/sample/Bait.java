@@ -1,10 +1,14 @@
 package ca.qc.ircm.prohits2perseus.sample;
 
 import ca.qc.ircm.processing.GeneratePropertyNames;
+import ca.qc.ircm.prohits2perseus.project.Project;
+import ca.qc.ircm.prohits2perseus.project.ProjectData;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -13,7 +17,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = Bait.TABLE_NAME)
 @GeneratePropertyNames
-public class Bait implements Serializable {
+public class Bait implements Serializable, ProjectData {
   public static final String TABLE_NAME = "Bait";
   private static final long serialVersionUID = 7069067891007593075L;
 
@@ -24,10 +28,16 @@ public class Bait implements Serializable {
   @Column(unique = true, nullable = false)
   private Long id;
   /**
-   * Bait.
+   * Name.
    */
   @Column(name = "genename")
   private String name;
+  /**
+   * Project of this bait.
+   */
+  @ManyToOne
+  @JoinColumn(name = "projectid")
+  private Project project;
 
   @Override
   public String toString() {
@@ -48,5 +58,14 @@ public class Bait implements Serializable {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  @Override
+  public Project getProject() {
+    return project;
+  }
+
+  public void setProject(Project project) {
+    this.project = project;
   }
 }
