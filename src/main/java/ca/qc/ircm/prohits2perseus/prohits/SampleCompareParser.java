@@ -44,6 +44,7 @@ public class SampleCompareParser {
     String[] sampleColumns = lines.get(headerIndex - 2);
     SampleCompareMetadata metadata = new SampleCompareMetadata();
     metadata.headerLineNumber = headerIndex;
+    metadata.geneNameIndex = geneNameIndex;
     metadata.samplesStartColumnNumber = IntStream.range(0, sampleColumns.length)
         .filter(i -> !sampleColumns[i].isEmpty()).findFirst().orElse(-1);
     metadata.samples =

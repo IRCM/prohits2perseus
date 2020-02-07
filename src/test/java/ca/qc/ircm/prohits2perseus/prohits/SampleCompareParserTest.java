@@ -42,6 +42,7 @@ public class SampleCompareParserTest {
     assertEquals("BACE1", metadata.genes.get(metadata.genes.size() - 1));
     assertEquals(4, metadata.samplesStartColumnNumber);
     assertEquals(8, metadata.headerLineNumber);
+    assertEquals(1, metadata.geneNameIndex);
   }
 
   @Test

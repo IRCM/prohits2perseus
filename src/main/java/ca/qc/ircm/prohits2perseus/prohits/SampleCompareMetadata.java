@@ -14,6 +14,7 @@ public class SampleCompareMetadata {
   public List<String> genes;
   public int headerLineNumber;
   public int samplesStartColumnNumber;
+  public int geneNameIndex;
 
   public Long id(String sample) {
     Pattern sampleNamePattern = Pattern.compile(SAMPLE_NAME_PATTERN);
