@@ -1,5 +1,8 @@
 package ca.qc.ircm.prohits2perseus.gui;
 
+import static ca.qc.ircm.prohits2perseus.sample.SampleProperties.CONTROL;
+import static ca.qc.ircm.prohits2perseus.sample.SampleProperties.PERSEUS;
+
 import ca.qc.ircm.javafx.JavafxUtils;
 import ca.qc.ircm.prohits2perseus.AppResources;
 import ca.qc.ircm.prohits2perseus.prohits.FetchSamplesTask;
@@ -98,9 +101,9 @@ public class MainPresenter {
     sampleBait.setCellValueFactory(sample -> new SimpleStringProperty(
         sample.getValue() != null ? sample.getValue().getBait().getName() : null));
     sampleControl.setCellFactory(column -> new CheckBoxTableCell<>());
-    sampleControl.setCellValueFactory(new PropertyValueFactory<>("control"));
+    sampleControl.setCellValueFactory(new PropertyValueFactory<>(CONTROL));
     samplePerseus.setCellFactory(column -> new TextFieldTableCell<>(new DefaultStringConverter()));
-    samplePerseus.setCellValueFactory(new PropertyValueFactory<>("perseus"));
+    samplePerseus.setCellValueFactory(new PropertyValueFactory<>(PERSEUS));
     gene.disableProperty().bind(normalization.selectedProperty().not());
     gene.textProperty().addListener(e -> validateGene());
     geneError.setVisible(false);
