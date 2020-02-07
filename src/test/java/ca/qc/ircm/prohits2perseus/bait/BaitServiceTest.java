@@ -1,8 +1,10 @@
-package ca.qc.ircm.prohits2perseus.sample;
+package ca.qc.ircm.prohits2perseus.bait;
 
 import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import ca.qc.ircm.prohits2perseus.bait.Bait;
+import ca.qc.ircm.prohits2perseus.bait.BaitService;
 import ca.qc.ircm.prohits2perseus.test.config.ServiceTestAnnotations;
 import org.junit.Test;
 import org.junit.runner.RunWith;

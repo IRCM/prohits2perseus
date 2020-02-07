@@ -1,6 +1,7 @@
 package ca.qc.ircm.prohits2perseus.sample;
 
 import ca.qc.ircm.processing.GeneratePropertyNames;
+import ca.qc.ircm.prohits2perseus.bait.Bait;
 import ca.qc.ircm.prohits2perseus.project.Project;
 import ca.qc.ircm.prohits2perseus.project.ProjectData;
 import java.io.Serializable;

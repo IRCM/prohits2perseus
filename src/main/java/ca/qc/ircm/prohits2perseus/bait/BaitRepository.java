@@ -1,4 +1,4 @@
-package ca.qc.ircm.prohits2perseus.sample;
+package ca.qc.ircm.prohits2perseus.bait;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
