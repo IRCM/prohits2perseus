@@ -40,7 +40,7 @@ public class SampleCompareParserTest {
     assertEquals("TUBB4B", metadata.genes.get(1));
     assertEquals("AGT", metadata.genes.get(metadata.genes.size() - 2));
     assertEquals("BACE1", metadata.genes.get(metadata.genes.size() - 1));
-    assertEquals(4, metadata.samplesStartColumnNumber);
+    assertEquals(4, metadata.samplesStartIndex);
     assertEquals(8, metadata.headerLineNumber);
     assertEquals(1, metadata.geneNameIndex);
   }

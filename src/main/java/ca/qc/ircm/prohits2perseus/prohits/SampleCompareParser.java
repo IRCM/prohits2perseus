@@ -45,7 +45,7 @@ public class SampleCompareParser {
     SampleCompareMetadata metadata = new SampleCompareMetadata();
     metadata.headerLineNumber = headerIndex;
     metadata.geneNameIndex = geneNameIndex;
-    metadata.samplesStartColumnNumber = IntStream.range(0, sampleColumns.length)
+    metadata.samplesStartIndex = IntStream.range(0, sampleColumns.length)
         .filter(i -> !sampleColumns[i].isEmpty()).findFirst().orElse(-1);
     metadata.samples =
         Stream.of(sampleColumns).filter(sample -> !sample.isEmpty()).collect(Collectors.toList());
@@ -73,7 +73,7 @@ public class SampleCompareParser {
     }
     List<String> header = lines.get(metadata.headerLineNumber);
     for (int i = 0; i < metadata.samples.size(); i++) {
-      header.set(i + metadata.samplesStartColumnNumber, metadata.samples.get(i));
+      header.set(i + metadata.samplesStartIndex, metadata.samples.get(i));
     }
     return lines.stream().skip(metadata.headerLineNumber)
         .collect(Collectors.toCollection(ArrayList::new));
