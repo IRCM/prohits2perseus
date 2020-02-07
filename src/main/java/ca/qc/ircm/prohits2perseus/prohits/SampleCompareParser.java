@@ -1,5 +1,7 @@
 package ca.qc.ircm.prohits2perseus.prohits;
 
+import static java.util.stream.Collectors.toCollection;
+
 import com.opencsv.CSVParser;
 import java.io.File;
 import java.io.IOException;
@@ -30,22 +32,49 @@ public class SampleCompareParser {
    *           could not read file
    */
   public SampleCompareMetadata parseMetadata(File file) throws IOException {
-    CSVParser csvParser = new CSVParser();
     List<String> rawlines = Files.readAllLines(file.toPath());
     List<String[]> lines = new ArrayList<>();
     for (int i = 0; i < rawlines.size(); i++) {
-      lines.add(csvParser.parseLine(rawlines.get(i)));
+      lines.add(new CSVParser().parseLine(rawlines.get(i)));
     }
     int headerIndex = IntStream.range(0, rawlines.size())
         .filter(i -> lines.get(i)[0].equals(GENE_ID_COLUMN)).findFirst().orElseThrow(
             () -> new IOException("File " + file + " not a Prohits sample comparison file"));
     int geneNameIndex = Arrays.asList(lines.get(headerIndex)).indexOf(GENE_NAME_COLUMN);
-    SampleCompareMetadata metadata = new SampleCompareMetadata();
     String[] sampleColumns = lines.get(headerIndex - 2);
+    SampleCompareMetadata metadata = new SampleCompareMetadata();
+    metadata.headerLineNumber = headerIndex;
+    metadata.samplesStartColumnNumber = IntStream.range(0, sampleColumns.length)
+        .filter(i -> !sampleColumns[i].isEmpty()).findFirst().orElse(-1);
     metadata.samples =
         Stream.of(sampleColumns).filter(sample -> !sample.isEmpty()).collect(Collectors.toList());
     metadata.genes = lines.stream().skip(headerIndex + 1).map(columns -> columns[geneNameIndex])
         .collect(Collectors.toList());
     return metadata;
+  }
+
+  /**
+   * Parses sample comparison file, skipping lines before header and using sample names as headers.
+   *
+   * @param file
+   *          sample comparison file
+   * @return all lines beginning with header line
+   * @throws IOException
+   *           could not parse file
+   */
+  public List<List<String>> parse(File file) throws IOException {
+    SampleCompareMetadata metadata = parseMetadata(file);
+    List<String> rawlines = Files.readAllLines(file.toPath());
+    List<List<String>> lines = new ArrayList<>();
+    for (int i = 0; i < rawlines.size(); i++) {
+      lines.add(Stream.of(new CSVParser().parseLine(rawlines.get(i)))
+          .collect(toCollection(ArrayList::new)));
+    }
+    List<String> header = lines.get(metadata.headerLineNumber);
+    for (int i = 0; i < metadata.samples.size(); i++) {
+      header.set(i + metadata.samplesStartColumnNumber, metadata.samples.get(i));
+    }
+    return lines.stream().skip(metadata.headerLineNumber)
+        .collect(Collectors.toCollection(ArrayList::new));
   }
 }
