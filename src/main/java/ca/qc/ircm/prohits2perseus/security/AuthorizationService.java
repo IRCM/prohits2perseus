@@ -39,6 +39,9 @@ public class AuthorizationService {
     }
 
     User user = currentUser();
+    if (user == null) {
+      throw new AccessControlException("unkown user cannot access data " + data);
+    }
     Project project = data.getProject();
     if (user.getProjects().stream().filter(pr -> pr.getId().equals(project.getId())).findAny()
         .isEmpty()) {

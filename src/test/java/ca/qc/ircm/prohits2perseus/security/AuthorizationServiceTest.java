@@ -43,4 +43,25 @@ public class AuthorizationServiceTest {
     Sample sample = sampleRepository.findById(10L).orElse(null);
     service.checkRead(sample);
   }
+
+  @Test
+  public void checkRead_NullData() {
+    System.setProperty("user.name", "poitrac");
+    service.checkRead(null);
+  }
+
+  @Test
+  public void checkRead_NullProject() {
+    System.setProperty("user.name", "poitrasc");
+    Sample sample = sampleRepository.findById(1L).orElse(null);
+    sample.setProject(null);
+    service.checkRead(sample);
+  }
+
+  @Test(expected = AccessControlException.class)
+  public void checkRead_NullUser() {
+    System.setProperty("user.name", "");
+    Sample sample = sampleRepository.findById(1L).orElse(null);
+    service.checkRead(sample);
+  }
 }
