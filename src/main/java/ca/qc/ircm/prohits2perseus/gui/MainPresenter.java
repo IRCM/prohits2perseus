@@ -14,8 +14,10 @@ import ca.qc.ircm.prohits2perseus.sample.Sample;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleObjectProperty;
@@ -27,6 +29,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -93,6 +97,7 @@ public class MainPresenter {
 
   @FXML
   private void initialize() {
+    samples.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     samples.setEditable(true);
     sampleId.setCellValueFactory(sample -> new SimpleObjectProperty<>(
         sample.getValue() != null ? sample.getValue().getId() : null));
@@ -102,7 +107,14 @@ public class MainPresenter {
         sample.getValue() != null ? sample.getValue().getBait().getName() : null));
     sampleControl.setCellFactory(column -> new CheckBoxTableCell<>());
     sampleControl.setCellValueFactory(new PropertyValueFactory<>(CONTROL));
-    samplePerseus.setCellFactory(column -> new TextFieldTableCell<>(new DefaultStringConverter()));
+    samplePerseus.getStyleClass().add(PERSEUS);
+    samplePerseus.setCellFactory(column -> new TextFieldTableCell<>(new DefaultStringConverter()) {
+      @Override
+      public void commitEdit(String newValue) {
+        super.commitEdit(newValue);
+        validateSamples();
+      }
+    });
     samplePerseus.setCellValueFactory(new PropertyValueFactory<>(PERSEUS));
     gene.disableProperty().bind(normalization.selectedProperty().not());
     gene.textProperty().addListener(e -> validateGene());
@@ -176,6 +188,22 @@ public class MainPresenter {
             .collect(Collectors.toList());
     long lowerConflicts = conflicts.stream().filter(sa -> sa.getId() < sample.getId()).count();
     return bait + "_" + format.format(lowerConflicts + 1);
+  }
+
+  @SuppressWarnings("unchecked")
+  private boolean validateSamples() {
+    List<TableCell<Sample, String>> cells = samples.lookupAll("." + PERSEUS + ".table-cell")
+        .stream().map(cell -> (TableCell<Sample, String>) cell).filter(cell -> !cell.isEmpty())
+        .collect(Collectors.toList());
+    cells.forEach(cell -> cell.getStyleClass().remove("error"));
+    Map<String, Integer> perseusCount = new HashMap<>();
+    cells.stream().map(cell -> cell.getItem()).forEach(perseus -> {
+      perseusCount.putIfAbsent(perseus, 0);
+      perseusCount.put(perseus, perseusCount.get(perseus) + 1);
+    });
+    cells.stream().filter(cell -> perseusCount.get(cell.getItem()) > 1)
+        .forEach(cell -> cell.getStyleClass().add("error"));
+    return perseusCount.values().stream().filter(value -> value > 1).findAny().isPresent();
   }
 
   private boolean validateGene() {

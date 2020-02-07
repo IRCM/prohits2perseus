@@ -16,7 +16,7 @@
  */
 
 /* Error */
-.error .label {
+.error .label, .label.error {
   -fx-text-fill: red;
 }
 .error .check-box {
@@ -25,9 +25,15 @@
 .error .radio-button {
   -fx-text-fill: red;
 }
-.label.error {
-  -fx-text-fill: red;
+.error .text-field, .text-field.error {
+  -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, ffe6e6;
 }
-.text-field.error {
-  -fx-background-color: -fx-shadow-highlight-color, -fx-text-box-border, FFFF99;
+.table-cell.error {
+  -fx-background-color: ffe6e6;
+}
+.table-cell.error:odd {
+  -fx-background-color: derive(ffe6e6,-5%);
+}
+.table-row-cell:selected .table-cell.error {
+  -fx-text-fill: red;
 }
