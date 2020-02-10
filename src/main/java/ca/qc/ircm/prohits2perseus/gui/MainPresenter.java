@@ -5,8 +5,12 @@ import static ca.qc.ircm.prohits2perseus.sample.SampleProperties.PERSEUS;
 
 import ca.qc.ircm.javafx.JavafxUtils;
 import ca.qc.ircm.prohits2perseus.AppResources;
+import ca.qc.ircm.prohits2perseus.bait.Bait;
+import ca.qc.ircm.prohits2perseus.prohits.ConvertTask;
+import ca.qc.ircm.prohits2perseus.prohits.ConvertTaskFactory;
 import ca.qc.ircm.prohits2perseus.prohits.FetchSamplesTask;
 import ca.qc.ircm.prohits2perseus.prohits.FetchSamplesTaskFactory;
+import ca.qc.ircm.prohits2perseus.prohits.NormalizeMetadata;
 import ca.qc.ircm.prohits2perseus.prohits.ParseSampleCompareTask;
 import ca.qc.ircm.prohits2perseus.prohits.ParseSampleCompareTaskFactory;
 import ca.qc.ircm.prohits2perseus.prohits.SampleCompareMetadata;
@@ -20,6 +24,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -84,15 +89,18 @@ public class MainPresenter {
   private TextField gene;
   @FXML
   private Label geneError;
+  private ObjectProperty<File> fileProperty = new SimpleObjectProperty<>();
   private FileChooser fileChooser = new FileChooser();
   private SampleCompareMetadata metadata;
   private final ParseSampleCompareTaskFactory parseFactory;
   private final FetchSamplesTaskFactory fetchSamplesFactory;
+  private final ConvertTaskFactory convertTaskFactory;
 
   protected MainPresenter(ParseSampleCompareTaskFactory parseFactory,
-      FetchSamplesTaskFactory fetchSamplesFactory) {
+      FetchSamplesTaskFactory fetchSamplesFactory, ConvertTaskFactory convertTaskFactory) {
     this.parseFactory = parseFactory;
     this.fetchSamplesFactory = fetchSamplesFactory;
+    this.convertTaskFactory = convertTaskFactory;
   }
 
   @FXML
@@ -127,6 +135,7 @@ public class MainPresenter {
     File selection = fileChooser.showOpenDialog(view.getScene().getWindow());
     if (selection != null) {
       fileChooser.setInitialDirectory(selection.getParentFile());
+      fileProperty.set(selection);
       file.setText(selection.getName());
       file.setTooltip(new Tooltip(selection.getPath()));
       Platform.runLater(() -> parseFile(selection));
@@ -135,7 +144,7 @@ public class MainPresenter {
 
   private void parseFile(File file) {
     logger.debug("parsing file {}", file);
-    final AppResources resources = new AppResources(getClass(), Locale.getDefault());
+    final AppResources resources = new AppResources(MainView.class, Locale.getDefault());
     final Window window = view.getScene().getWindow();
     final ParseSampleCompareTask task = parseFactory.create(file, Locale.getDefault());
     final ProgressDialog progress = new ProgressDialog(window, task);
@@ -158,7 +167,7 @@ public class MainPresenter {
 
   private void fetchSamples(SampleCompareMetadata metadata, File file) {
     logger.debug("fetching samples for file {}", file);
-    final AppResources resources = new AppResources(getClass(), Locale.getDefault());
+    final AppResources resources = new AppResources(MainView.class, Locale.getDefault());
     final Window window = view.getScene().getWindow();
     final FetchSamplesTask task = fetchSamplesFactory.create(metadata, Locale.getDefault());
     final ProgressDialog progress = new ProgressDialog(window, task);
@@ -174,6 +183,18 @@ public class MainPresenter {
     });
     task.setOnSucceeded(e -> {
       List<Sample> samples = task.getValue();
+      for (int i = 0; i < samples.size(); i++) {
+        if (samples.get(i) == null) {
+          Sample sample = new Sample();
+          sample.setName(metadata.samples.get(i));
+          sample.setBait(new Bait());
+          samples.set(i, sample);
+        }
+        Sample sample = samples.get(i);
+        if (sample.getBait().getName() == null) {
+          sample.getBait().setName("unknown");
+        }
+      }
       samples.stream().forEach(sample -> sample.setPerseus(perseus(sample, samples)));
       this.samples.setItems(FXCollections.observableArrayList(samples));
     });
@@ -222,6 +243,41 @@ public class MainPresenter {
 
   @FXML
   private void convert(ActionEvent event) {
-    new Alert(Alert.AlertType.ERROR, "Convert not implemented yet").showAndWait();
+    logger.debug("converting file {} to Perseus", file);
+    final AppResources resources = new AppResources(MainView.class, Locale.getDefault());
+    File file = fileProperty.get();
+    boolean normalize = normalization.isSelected();
+    NormalizeMetadata normalizeMetadata = new NormalizeMetadata();
+    normalizeMetadata.geneName = gene.getText();
+    normalizeMetadata.ignoreSamples =
+        samples.getItems().stream().filter(sample -> sampleControl.getCellData(sample))
+            .map(sample -> sample.getPerseus()).collect(Collectors.toList());
+    final Window window = view.getScene().getWindow();
+    final ConvertTask task = convertTaskFactory.create(file, samples.getItems(), normalize,
+        normalizeMetadata, Locale.getDefault());
+    final ProgressDialog progress = new ProgressDialog(window, task);
+    task.stateProperty().addListener((observable, oldValue, newValue) -> {
+      if (newValue == State.FAILED || newValue == State.SUCCEEDED || newValue == State.CANCELLED) {
+        progress.close();
+      }
+    });
+    task.setOnFailed(e -> {
+      logger.warn("error when converting file {} to Perseus", file, task.getException());
+      new Alert(Alert.AlertType.ERROR, resources.message("conversionError", file.getName()))
+          .showAndWait();
+    });
+    task.setOnSucceeded(e -> {
+      @SuppressWarnings("unchecked")
+      List<File> outputs = (List<File>) e.getSource().getValue();
+      logger.warn("converted file {} to Perseus succesfully", file, task.getException());
+      String[] replacements = new String[outputs.size() + 1];
+      replacements[0] = file.getName();
+      for (int i = 0; i < outputs.size(); i++) {
+        replacements[i + 1] = outputs.get(i).getName();
+      }
+      new Alert(Alert.AlertType.CONFIRMATION,
+          resources.message("conversion", (Object[]) replacements)).showAndWait();
+    });
+    new Thread(task).start();
   }
 }

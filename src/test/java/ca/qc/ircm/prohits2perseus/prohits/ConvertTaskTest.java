@@ -80,6 +80,7 @@ public class ConvertTaskTest extends ApplicationTest {
     input = folder.newFile("input.csv");
     task = factory.create(input, samples, normalize, normalizeMetadata, locale);
     metadata.samplesStartIndex = 4;
+    metadata.geneNameIndex = 1;
     convertedContent = generateText();
     normalizedContent = generateText();
     when(parser.parseMetadata(any())).thenReturn(metadata);
@@ -113,7 +114,7 @@ public class ConvertTaskTest extends ApplicationTest {
     task.titleProperty().addListener(titleChangeListener);
     task.messageProperty().addListener(messageChangeListener);
     task.progressProperty().addListener(progressChangeListener);
-    task.call();
+    List<File> outputs = task.call();
     verify(parser).parseMetadata(input);
     verify(parser).parse(input);
     verify(converter).toPerseus(parsedContent, metadata.samplesStartIndex, samples);
@@ -122,10 +123,13 @@ public class ConvertTaskTest extends ApplicationTest {
         eq(resources.message("title", input.getName())));
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(), any());
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(), any());
+    assertEquals(1, outputs.size());
     Path converterOutput = folder.getRoot().toPath().resolve("input.txt");
+    assertTrue(outputs.contains(converterOutput.toFile()));
     assertTrue(Files.exists(converterOutput));
     compareContent(convertedContent, converterOutput);
     Path normalizerOutput = folder.getRoot().toPath().resolve("input-normalized.txt");
+    assertFalse(outputs.contains(normalizerOutput.toFile()));
     assertFalse(Files.exists(normalizerOutput));
   }
 
@@ -136,19 +140,24 @@ public class ConvertTaskTest extends ApplicationTest {
     task.titleProperty().addListener(titleChangeListener);
     task.messageProperty().addListener(messageChangeListener);
     task.progressProperty().addListener(progressChangeListener);
-    task.call();
+    List<File> outputs = task.call();
     verify(parser).parseMetadata(input);
     verify(parser).parse(input);
     verify(converter).toPerseus(parsedContent, metadata.samplesStartIndex, samples);
     verify(normalizer).normalize(convertedContent, normalizeMetadata);
+    assertEquals(4, normalizeMetadata.samplesStartIndex);
+    assertEquals(1, normalizeMetadata.geneNameIndex);
     verify(titleChangeListener, atLeastOnce()).changed(any(), any(),
         eq(resources.message("title", input.getName())));
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(), any());
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(), any());
+    assertEquals(2, outputs.size());
     Path converterOutput = folder.getRoot().toPath().resolve("input.txt");
+    assertTrue(outputs.contains(converterOutput.toFile()));
     assertTrue(Files.exists(converterOutput));
     compareContent(convertedContent, converterOutput);
     Path normalizerOutput = folder.getRoot().toPath().resolve("input-normalized.txt");
+    assertTrue(outputs.contains(normalizerOutput.toFile()));
     assertTrue(Files.exists(normalizerOutput));
     compareContent(normalizedContent, normalizerOutput);
   }

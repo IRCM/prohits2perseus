@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -19,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Converts Prohits sample comparison file into files readable by Perseus.
  */
-public class ConvertTask extends Task<Void> {
+public class ConvertTask extends Task<List<File>> {
   @SuppressWarnings("unused")
   private static final Logger logger = LoggerFactory.getLogger(ConvertTask.class);
   private final File input;
@@ -45,7 +46,7 @@ public class ConvertTask extends Task<Void> {
   }
 
   @Override
-  protected Void call() throws Exception {
+  protected List<File> call() throws Exception {
     double step = 1.0 / (normalize ? 4 : 3);
     AppResources resources = new AppResources(ConvertTask.class, locale);
     updateTitle(resources.message("title", input.getName()));
@@ -60,17 +61,22 @@ public class ConvertTask extends Task<Void> {
     String baseFilename = input.getName().substring(0,
         input.getName().contains(".") ? input.getName().lastIndexOf(".")
             : input.getName().length());
+    List<File> outputs = new ArrayList<>();
     Path output = input.toPath().resolveSibling(baseFilename + ".txt");
     writeTabDelimited(output, converted);
+    outputs.add(output.toFile());
     updateProgress(step * 3, 1.0);
     if (normalize) {
       updateMessage(resources.message("normalize"));
+      normalizeMetadata.samplesStartIndex = metadata.samplesStartIndex;
+      normalizeMetadata.geneNameIndex = metadata.geneNameIndex;
       List<List<String>> normalized = normalizer.normalize(converted, normalizeMetadata);
       output = input.toPath().resolveSibling(baseFilename + "-normalized.txt");
       writeTabDelimited(output, normalized);
+      outputs.add(output.toFile());
     }
     updateProgress(1.0, 1.0);
-    return null;
+    return outputs;
   }
 
   private void writeTabDelimited(Path output, List<List<String>> content) throws IOException {
