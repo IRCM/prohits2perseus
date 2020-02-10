@@ -47,7 +47,7 @@ public class ConvertTask extends Task<Void> {
   @Override
   protected Void call() throws Exception {
     double step = 1.0 / (normalize ? 4 : 3);
-    AppResources resources = new AppResources(FetchSamplesTask.class, locale);
+    AppResources resources = new AppResources(ConvertTask.class, locale);
     updateTitle(resources.message("title", input.getName()));
     updateMessage(resources.message("parseMetadata"));
     SampleCompareMetadata metadata = parser.parseMetadata(input);
