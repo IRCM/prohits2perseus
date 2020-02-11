@@ -8,6 +8,8 @@ app-image
 "$[jpackage.input]"
 --main-jar
 "$[javafx.finalName]"
+--java-options
+"$[jpackage.profileOption]"
 --app-version
 "$[project.version]"
 --copyright

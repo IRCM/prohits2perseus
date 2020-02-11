@@ -64,6 +64,7 @@
     <jpackage>${java.home}/bin/jpackage</jpackage>
     <jpackage.skip>true</jpackage.skip>
     <jpackage.input>${project.build.directory}/jpackage</jpackage.input>
+    <jpackage.profileOption></jpackage.profileOption>
     <jpackage.options.windows>${project.build.directory}/classes/jpackage/windows.txt</jpackage.options.windows>
     <jpackage.options.mac>${project.build.directory}/classes/jpackage/mac.txt</jpackage.options.mac>
     <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux.txt</jpackage.options.linux>
@@ -433,7 +434,18 @@
     <profile>
       <id>app-image</id>
       <properties>
-	    <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux-app-image.txt</jpackage.options.linux>
+	      <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux-app-image.txt</jpackage.options.linux>
+      </properties>
+    </profile>
+    <profile>
+      <id>production-configuration</id>
+      <activation>
+        <file>
+          <exists>src/main/resources/application-production.yml</exists>
+        </file>
+      </activation>
+      <properties>
+        <jpackage.profileOption>-Dspring.profiles.active=production</jpackage.profileOption>
       </properties>
     </profile>
   </profiles>
