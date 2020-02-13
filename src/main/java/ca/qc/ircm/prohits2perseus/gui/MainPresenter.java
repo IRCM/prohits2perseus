@@ -263,8 +263,9 @@ public class MainPresenter {
     });
     task.setOnFailed(e -> {
       logger.warn("error when converting file {} to Perseus", file, task.getException());
-      new Alert(Alert.AlertType.ERROR, resources.message("conversionError", file.getName()))
-          .showAndWait();
+      new Alert(Alert.AlertType.ERROR,
+          resources.message("conversionError", file.getName(), task.getException().getMessage()))
+              .showAndWait();
     });
     task.setOnSucceeded(e -> {
       @SuppressWarnings("unchecked")
