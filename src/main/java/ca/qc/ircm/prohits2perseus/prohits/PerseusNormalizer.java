@@ -75,7 +75,8 @@ public class PerseusNormalizer {
       try {
         Double.parseDouble(value);
       } catch (NumberFormatException e) {
-        throw new IllegalArgumentException("gene value " + value + " not a number");
+        throw new IllegalArgumentException(
+            "gene value '" + value + "' not a number for sample " + data.get(0).get(i));
       }
     }
     List<Double> geneValues =

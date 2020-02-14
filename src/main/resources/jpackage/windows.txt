@@ -6,6 +6,8 @@
 "$[jpackage.input]"
 --main-jar
 "$[javafx.finalName]"
+--java-options
+"$[jpackage.profileOption]"
 --app-version
 "$[win.version]"
 --copyright

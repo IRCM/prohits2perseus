@@ -22,6 +22,8 @@ import ca.qc.ircm.prohits2perseus.gui.MainView;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
@@ -29,9 +31,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class MainApplication extends AbstractSpringBootJavafxApplication {
+  private static final Logger logger = LoggerFactory.getLogger(MainApplication.class);
+
   @Override
   public void init() throws Exception {
     super.init();
+    logger.debug("database url: {}",
+        applicationContext.getEnvironment().getProperty("spring.datasource.url"));
     com.airhacks.afterburner.injection.Injector
         .setInstanceSupplier(clazz -> applicationContext.getBean(clazz));
   }
