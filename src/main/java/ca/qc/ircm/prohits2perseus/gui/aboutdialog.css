@@ -1,0 +1,10 @@
+.about-dialog {
+	-fx-padding: 10;
+}
+.about-dialog .messages {
+	-fx-padding: 10;
+}
+.about-dialog .buttons {
+	-fx-alignment: center;
+	-fx-padding: 10 0 0 0;
+}

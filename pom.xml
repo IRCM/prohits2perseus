@@ -202,6 +202,7 @@
       <resource>
         <directory>src/main/resources</directory>
         <excludes>
+          <exclude>application.yml</exclude>
           <exclude>jpackage/**</exclude>
         </excludes>
       </resource>
@@ -209,6 +210,7 @@
         <directory>src/main/resources</directory>
         <filtering>true</filtering>
         <includes>
+          <include>application.yml</include>
           <include>jpackage/**</include>
         </includes>
       </resource>

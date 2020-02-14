@@ -20,8 +20,16 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?scenebuilder-preview-i18n-resources mainview.properties?>
+<?import javafx.scene.control.MenuBar?>
 
 <BorderPane fx:id="view" styleClass="main" fx:controller="ca.qc.ircm.prohits2perseus.gui.MainPresenter" xmlns:fx="http://javafx.com/fxml">
+  <top>
+    <MenuBar useSystemMenuBar="true">
+      <Menu text="%help">
+        <MenuItem text="%about" onAction="#about"/>
+      </Menu>
+    </MenuBar>
+  </top>
   <center>
     <ScrollPane>
 	    <VBox styleClass="main-box">

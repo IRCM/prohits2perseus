@@ -282,4 +282,9 @@ public class MainPresenter {
     });
     new Thread(task).start();
   }
+
+  @FXML
+  private void about(ActionEvent event) {
+    new AboutDialog(view.getScene().getWindow());
+  }
 }
