@@ -50,6 +50,7 @@ import javafx.stage.Window;
 import javafx.util.converter.DefaultStringConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -96,6 +97,7 @@ public class MainPresenter {
   private final FetchSamplesTaskFactory fetchSamplesFactory;
   private final ConvertTaskFactory convertTaskFactory;
 
+  @Autowired
   protected MainPresenter(ParseSampleCompareTaskFactory parseFactory,
       FetchSamplesTaskFactory fetchSamplesFactory, ConvertTaskFactory convertTaskFactory) {
     this.parseFactory = parseFactory;
