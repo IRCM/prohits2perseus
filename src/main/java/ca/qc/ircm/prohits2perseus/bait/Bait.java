@@ -33,6 +33,11 @@ public class Bait implements Serializable, ProjectData {
   @Column(name = "genename")
   private String name;
   /**
+   * Gene identifier.
+   */
+  @Column
+  private Long geneId;
+  /**
    * Project of this bait.
    */
   @ManyToOne
@@ -67,5 +72,13 @@ public class Bait implements Serializable, ProjectData {
 
   public void setProject(Project project) {
     this.project = project;
+  }
+
+  public Long getGeneId() {
+    return geneId;
+  }
+
+  public void setGeneId(Long geneId) {
+    this.geneId = geneId;
   }
 }

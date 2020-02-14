@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS ProPermission (
 CREATE TABLE IF NOT EXISTS Bait (
   ID int(11) NOT NULL AUTO_INCREMENT,
   GeneName varchar(25),
+  GeneID int(12),
   ProjectID int(11) NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT baitProject_ibfk FOREIGN KEY (ProjectID) REFERENCES Projects (ID) ON UPDATE CASCADE

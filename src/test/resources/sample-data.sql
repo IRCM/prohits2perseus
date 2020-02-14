@@ -15,18 +15,18 @@
 -- along with this program.  If not, see <http://www.gnu.org/licenses/>.
 --
 
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (1,'POLR3B',1);
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (2,'POLR3B-R120S',1);
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (3,'Flag',1);
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (4,'POLR2A',2);
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (5,'POLR2A-S34V',2);
-INSERT INTO Bait (ID,GeneName,ProjectID)
-VALUES (6,'EGFP',2);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (1,'POLR3B',55703,1);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (2,'POLR3B-R120S',55703,1);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (3,'Flag',null,1);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (4,'POLR2A',5431,2);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (5,'POLR2A-S34V',5431,2);
+INSERT INTO Bait (ID,GeneName,GeneID,ProjectID)
+VALUES (6,'EGFP',-1,2);
 INSERT INTO Band (ID,BaitID,Location,ProjectID)
 VALUES (1,1,'OF_20191011_COU_01',1);
 INSERT INTO Band (ID,BaitID,Location,ProjectID)
