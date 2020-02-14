@@ -290,13 +290,14 @@ public class MainPresenter {
       @SuppressWarnings("unchecked")
       List<File> outputs = (List<File>) e.getSource().getValue();
       logger.warn("converted file {} to Perseus succesfully", file, task.getException());
-      String[] replacements = new String[outputs.size() + 1];
+      Object[] replacements = new Object[outputs.size() + 2];
       replacements[0] = file.getName();
+      replacements[1] = outputs.size();
       for (int i = 0; i < outputs.size(); i++) {
-        replacements[i + 1] = outputs.get(i).getName();
+        replacements[i + 2] = outputs.get(i).getName();
       }
-      new Alert(Alert.AlertType.CONFIRMATION,
-          resources.message("conversion", (Object[]) replacements)).showAndWait();
+      new Alert(Alert.AlertType.CONFIRMATION, resources.message("conversion", replacements))
+          .showAndWait();
     });
     new Thread(task).start();
   }
