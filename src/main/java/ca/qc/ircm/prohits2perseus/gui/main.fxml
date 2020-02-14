@@ -25,8 +25,11 @@
 <BorderPane fx:id="view" styleClass="main" fx:controller="ca.qc.ircm.prohits2perseus.gui.MainPresenter" xmlns:fx="http://javafx.com/fxml">
   <top>
     <MenuBar useSystemMenuBar="true">
-      <Menu text="%help">
-        <MenuItem text="%about" onAction="#about"/>
+      <Menu text="%menu.file">
+        <MenuItem text="%menu.open" accelerator="Shortcut+O" onAction="#browse"/>
+      </Menu>
+      <Menu text="%menu.help">
+        <MenuItem text="%menu.about" onAction="#about"/>
       </Menu>
     </MenuBar>
   </top>
