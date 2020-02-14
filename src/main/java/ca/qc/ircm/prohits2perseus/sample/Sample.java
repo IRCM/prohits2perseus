@@ -94,7 +94,7 @@ public class Sample implements Serializable, ProjectData {
     return control;
   }
 
-  public boolean getControl() {
+  public boolean isControl() {
     return control.get();
   }
 

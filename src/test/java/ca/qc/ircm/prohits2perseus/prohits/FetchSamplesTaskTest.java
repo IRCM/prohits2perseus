@@ -1,5 +1,7 @@
 package ca.qc.ircm.prohits2perseus.prohits;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -8,8 +10,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import ca.qc.ircm.prohits2perseus.sample.Sample;
+import ca.qc.ircm.prohits2perseus.sample.SampleRepository;
 import ca.qc.ircm.prohits2perseus.sample.SampleService;
-import ca.qc.ircm.prohits2perseus.test.config.TestFxTestAnnotations;
+import ca.qc.ircm.prohits2perseus.test.config.TransactionalFxTestAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -24,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@TestFxTestAnnotations
+@TransactionalFxTestAnnotations
 public class FetchSamplesTaskTest extends ApplicationTest {
   @Autowired
   private FetchSamplesTaskFactory factory;
@@ -36,11 +39,10 @@ public class FetchSamplesTaskTest extends ApplicationTest {
   private ChangeListener<String> messageChangeListener;
   @Mock
   private ChangeListener<Number> progressChangeListener;
-  @Mock
+  @Autowired
+  private SampleRepository repository;
   private Sample sample1;
-  @Mock
   private Sample sample2;
-  @Mock
   private Sample sample3;
   private FetchSamplesTask task;
   private Locale locale = Locale.ENGLISH;
@@ -49,6 +51,9 @@ public class FetchSamplesTaskTest extends ApplicationTest {
   public void beforeTest() {
     metadata.samples = new ArrayList<>();
     task = factory.create(metadata, locale);
+    sample1 = repository.findById(1L).get();
+    sample2 = repository.findById(4L).get();
+    sample3 = repository.findById(7L).get();
   }
 
   @Test
@@ -63,8 +68,11 @@ public class FetchSamplesTaskTest extends ApplicationTest {
     List<Sample> samples = task.call();
     assertEquals(3, samples.size());
     assertEquals(sample1, samples.get(0));
+    assertFalse(samples.get(0).isControl());
     assertEquals(sample2, samples.get(1));
+    assertFalse(samples.get(1).isControl());
     assertEquals(sample3, samples.get(2));
+    assertTrue(samples.get(2).isControl());
     verify(metadata).id("test 1");
     verify(metadata).id("test 2");
     verify(metadata).id("test 3");

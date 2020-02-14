@@ -36,6 +36,11 @@ public class FetchSamplesTask extends Task<List<Sample>> {
       updateMessage(resources.message("message", sample));
       Long id = metadata.id(sample);
       Sample database = service.get(id);
+      database.setControl(database.getBait() == null);
+      if (database.getBait() != null) {
+        database.setControl(
+            database.getBait().getGeneId() == null || database.getBait().getGeneId() < 0);
+      }
       samples.add(database);
       updateProgress((i + 1.0) / size, 1.0);
     }
