@@ -30,7 +30,7 @@
 	          <Label text="%file"/>
 	        </HBox>
 	        <HBox fx:id="filePane" styleClass="field-box">
-	          <Button mnemonicParsing="false" onAction="#browse" text="%browse"/>
+	          <Button styleClass="file" mnemonicParsing="false" onAction="#browse" text="%browse"/>
 	          <Label fx:id="file"/>
 	        </HBox>
 	      </VBox>
