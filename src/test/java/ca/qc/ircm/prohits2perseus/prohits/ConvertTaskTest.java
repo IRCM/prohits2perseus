@@ -17,6 +17,7 @@
 
 package ca.qc.ircm.prohits2perseus.prohits;
 
+import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -164,6 +165,7 @@ public class ConvertTaskTest extends ApplicationTest {
     verify(normalizer).normalize(convertedContent, normalizeMetadata);
     assertEquals(4, normalizeMetadata.samplesStartIndex);
     assertEquals(1, normalizeMetadata.geneNameIndex);
+    waitForPlatform();
     verify(titleChangeListener, atLeastOnce()).changed(any(), any(),
         eq(resources.message("title", input.getName())));
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(), any());

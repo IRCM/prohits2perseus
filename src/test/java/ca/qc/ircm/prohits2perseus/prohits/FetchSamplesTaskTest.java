@@ -17,6 +17,7 @@
 
 package ca.qc.ircm.prohits2perseus.prohits;
 
+import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
@@ -33,9 +34,6 @@ import ca.qc.ircm.prohits2perseus.test.config.TransactionalFxTestAnnotations;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import org.junit.Before;
 import org.junit.Test;
@@ -99,9 +97,7 @@ public class FetchSamplesTaskTest extends ApplicationTest {
     verify(service).get(1L);
     verify(service).get(2L);
     verify(service).get(3L);
-    FutureTask<Void> waitForPlatform = new FutureTask<>((Callable<Void>) () -> null);
-    Platform.runLater(waitForPlatform);
-    waitForPlatform.get();
+    waitForPlatform();
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(String.class),
         any(String.class));
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(Number.class),

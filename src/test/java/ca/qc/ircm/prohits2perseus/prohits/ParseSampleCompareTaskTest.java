@@ -17,6 +17,7 @@
 
 package ca.qc.ircm.prohits2perseus.prohits;
 
+import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -68,6 +69,7 @@ public class ParseSampleCompareTaskTest extends ApplicationTest {
     SampleCompareMetadata metadata = task.call();
     assertEquals(this.metadata, metadata);
     verify(parser).parseMetadata(file);
+    waitForPlatform();
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(String.class),
         any(String.class));
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(Number.class),

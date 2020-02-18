@@ -17,6 +17,7 @@
 
 package ca.qc.ircm.prohits2perseus.gui;
 
+import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -61,6 +62,7 @@ public class ProgressDialogTest extends ApplicationTest {
     Thread thread = new Thread(task);
     thread.start();
     thread.join();
+    waitForPlatform();
     assertEquals(task.title, dialog.stage.getTitle());
   }
 
@@ -71,6 +73,7 @@ public class ProgressDialogTest extends ApplicationTest {
     Thread thread = new Thread(task);
     thread.start();
     thread.join();
+    waitForPlatform();
     assertEquals(task.message, dialog.presenter.message.getText());
   }
 
@@ -81,6 +84,7 @@ public class ProgressDialogTest extends ApplicationTest {
     Thread thread = new Thread(task);
     thread.start();
     thread.join();
+    waitForPlatform();
     assertEquals(task.progress, dialog.presenter.progressIndicator.getProgress());
     assertEquals(task.progress, dialog.presenter.progressBar.getProgress());
   }
