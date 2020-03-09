@@ -19,10 +19,9 @@ package ca.qc.ircm.prohits2perseus.prohits;
 
 import ca.qc.ircm.prohits2perseus.AppResources;
 import ca.qc.ircm.prohits2perseus.sample.Sample;
-import com.opencsv.CSVWriterBuilder;
-import com.opencsv.ICSVWriter;
 import java.io.File;
 import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
@@ -97,12 +96,10 @@ public class ConvertTask extends Task<List<File>> {
   }
 
   private void writeTabDelimited(Path output, List<List<String>> content) throws IOException {
-    try (ICSVWriter writer =
-        new CSVWriterBuilder(Files.newBufferedWriter(output, StandardOpenOption.CREATE))
-            .withSeparator('\t').build()) {
-      List<String[]> csv =
-          content.stream().map(line -> line.toArray(new String[0])).collect(Collectors.toList());
-      writer.writeAll(csv);
+    try (Writer writer = Files.newBufferedWriter(output, StandardOpenOption.CREATE)) {
+      for (List<String> line : content) {
+        writer.write(line.stream().collect(Collectors.joining("\t")) + "\n");
+      }
     }
   }
 }
