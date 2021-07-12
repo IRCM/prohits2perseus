@@ -17,7 +17,7 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <parent>
     <artifactId>parent</artifactId>
     <groupId>ca.qc.ircm</groupId>
@@ -266,7 +266,7 @@
               </goals>
               <configuration>
                 <target>
-                  <echo message="Copy jar for jpackage" />
+                  <echo message="Copy jar for jpackage"/>
                   <copy file="${project.build.directory}/${javafx.finalName}" todir="${jpackage.input}"></copy>
                 </target>
               </configuration>
@@ -314,32 +314,34 @@
               <exclude>**/*.icns</exclude>
               <exclude>**/*.bed</exclude>
             </excludes>
-            <executions>
-              <execution>
-                <goals><goal>check</goal></goals>
-              </execution>
-            </executions>
           </configuration>
+          <executions>
+            <execution>
+              <goals>
+                <goal>check</goal>
+              </goals>
+            </execution>
+          </executions>
         </plugin>
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>build-helper-maven-plugin</artifactId>
           <version>${build-helper-maven-plugin.version}</version>
-            <executions>
-              <execution>
-                <id>format-windows-product-version</id>
-                <goals>
-                  <goal>regex-property</goal>
-                </goals>
-                <phase>validate</phase>
-                <configuration>
-                  <name>win.version</name>
-                  <value>${project.version}</value>
-                  <regex>^(\d+)(\.\d+)?(\.\d+)?(-.*)?$</regex>
-                  <replacement>$1$2$3</replacement>
-                </configuration>
-              </execution>
-            </executions>
+          <executions>
+            <execution>
+              <id>format-windows-product-version</id>
+              <goals>
+                <goal>regex-property</goal>
+              </goals>
+              <phase>validate</phase>
+              <configuration>
+                <name>win.version</name>
+                <value>${project.version}</value>
+                <regex>^(\d+)(\.\d+)?(\.\d+)?(-.*)?$</regex>
+                <replacement>$1$2$3</replacement>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
       </plugins>
     </pluginManagement>
@@ -436,7 +438,7 @@
     <profile>
       <id>app-image</id>
       <properties>
-	      <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux-app-image.txt</jpackage.options.linux>
+        <jpackage.options.linux>${project.build.directory}/classes/jpackage/linux-app-image.txt</jpackage.options.linux>
       </properties>
     </profile>
     <profile>
