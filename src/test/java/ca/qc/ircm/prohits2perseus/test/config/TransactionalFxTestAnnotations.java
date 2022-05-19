@@ -23,8 +23,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.TestExecutionListeners.MergeMode;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,9 +32,6 @@ import org.springframework.transaction.annotation.Transactional;
 @ActiveProfiles("test")
 @Transactional
 @Sql({ "/drop-schema.sql", "/schema.sql", "/user-data.sql", "/sample-data.sql" })
-@TestExecutionListeners(
-    value = { TestFxTestExecutionListener.class },
-    mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 public @interface TransactionalFxTestAnnotations {
 
 }

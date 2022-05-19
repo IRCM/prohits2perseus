@@ -28,18 +28,22 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
 
 @TestFxTestAnnotations
-public class MainViewTest extends ApplicationTest {
+@ExtendWith(ApplicationExtension.class)
+public class MainViewTest {
   private MainView view;
   private Scene scene;
   @Autowired
   private ApplicationContext applicationContext;
 
-  @Override
+  @Start
   public void start(Stage stage) throws Exception {
     com.airhacks.afterburner.injection.Injector
         .setInstanceSupplier(clazz -> applicationContext.getBean(clazz));
@@ -54,17 +58,17 @@ public class MainViewTest extends ApplicationTest {
 
   @Test
   @Disabled("Does not work on Mojave right now")
-  public void browse() throws Throwable {
+  public void browse(FxRobot robot) throws Throwable {
     File file = new File(getClass().getResource("/comparison_matrix.csv").toURI());
-    clickOn(".button.file");
-    applyPathToChooser(file.getPath());
+    robot.clickOn(".button.file");
+    applyPathToChooser(robot, file.getPath());
   }
 
-  private void applyPathToChooser(String filePath) {
+  private void applyPathToChooser(FxRobot robot, String filePath) {
     Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
     StringSelection stringSelection = new StringSelection(filePath);
     clipboard.setContents(stringSelection, stringSelection);
-    press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
-    push(KeyCode.ENTER);
+    robot.press(KeyCode.CONTROL).press(KeyCode.V).release(KeyCode.V).release(KeyCode.CONTROL);
+    robot.push(KeyCode.ENTER);
   }
 }

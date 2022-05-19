@@ -31,15 +31,20 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.testfx.framework.junit.ApplicationTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.testfx.api.FxRobot;
+import org.testfx.framework.junit5.ApplicationExtension;
+import org.testfx.framework.junit5.Start;
 
 @TestFxTestAnnotations
-public class ProgressDialogTest extends ApplicationTest {
+@ExtendWith(ApplicationExtension.class)
+public class ProgressDialogTest {
   private ProgressDialog dialog;
   private Scene scene;
 
-  @Override
-  public void start(Stage stage) throws Exception {
+  @Start
+  private void start(Stage stage) throws Exception {
+    System.out.println("start method called");
     scene = new Scene(new BorderPane());
     stage.setScene(scene);
   }
@@ -53,7 +58,7 @@ public class ProgressDialogTest extends ApplicationTest {
   }
 
   @Test
-  public void updateTitle() throws Throwable {
+  public void updateTitle(FxRobot robot) throws Throwable {
     UpdateTitleTask task = new UpdateTitleTask();
     dialog = dialog(task);
     Thread thread = new Thread(task);
@@ -64,7 +69,7 @@ public class ProgressDialogTest extends ApplicationTest {
   }
 
   @Test
-  public void updateMessage() throws Throwable {
+  public void updateMessage(FxRobot robot) throws Throwable {
     UpdateMessageTask task = new UpdateMessageTask();
     dialog = dialog(task);
     Thread thread = new Thread(task);
@@ -75,7 +80,7 @@ public class ProgressDialogTest extends ApplicationTest {
   }
 
   @Test
-  public void updateProgress() throws Throwable {
+  public void updateProgress(FxRobot robot) throws Throwable {
     UpdateProgressTask task = new UpdateProgressTask();
     dialog = dialog(task);
     Thread thread = new Thread(task);
@@ -88,13 +93,13 @@ public class ProgressDialogTest extends ApplicationTest {
 
   @Test
   @Disabled("Does not work on Mojave right now")
-  public void cancel() throws Throwable {
+  public void cancel(FxRobot robot) throws Throwable {
     BlockingTask task = new BlockingTask();
     dialog = dialog(task);
     Thread thread = new Thread(task);
     thread.start();
-    sleep(100);
-    clickOn(".button");
+    robot.sleep(100);
+    robot.clickOn(".button");
     assertTrue(task.isCancelled());
   }
 

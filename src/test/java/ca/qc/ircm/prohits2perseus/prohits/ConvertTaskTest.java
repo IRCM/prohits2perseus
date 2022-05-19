@@ -50,14 +50,16 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.framework.junit5.ApplicationExtension;
 
 @TestFxTestAnnotations
-public class ConvertTaskTest extends ApplicationTest {
+@ExtendWith(ApplicationExtension.class)
+public class ConvertTaskTest {
   @Autowired
   private ConvertTaskFactory factory;
   @MockBean

@@ -37,13 +37,15 @@ import java.util.Locale;
 import javafx.beans.value.ChangeListener;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.testfx.framework.junit.ApplicationTest;
+import org.testfx.framework.junit5.ApplicationExtension;
 
 @TransactionalFxTestAnnotations
-public class FetchSamplesTaskTest extends ApplicationTest {
+@ExtendWith(ApplicationExtension.class)
+public class FetchSamplesTaskTest {
   @Autowired
   private FetchSamplesTaskFactory factory;
   @MockBean

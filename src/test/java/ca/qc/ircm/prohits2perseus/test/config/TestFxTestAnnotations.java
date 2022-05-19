@@ -23,16 +23,11 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestExecutionListeners;
-import org.springframework.test.context.TestExecutionListeners.MergeMode;
 
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 @SpringBootTest
 @ActiveProfiles("test")
-@TestExecutionListeners(
-    value = { TestFxTestExecutionListener.class },
-    mergeMode = MergeMode.MERGE_WITH_DEFAULTS)
 public @interface TestFxTestAnnotations {
 
 }
