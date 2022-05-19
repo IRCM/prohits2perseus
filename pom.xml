@@ -50,13 +50,12 @@
   </issueManagement>
   <properties>
     <resource.delimiter>$[*]</resource.delimiter>
-    <javac.version>11</javac.version>
+    <javac.version>17</javac.version>
     <main-class>ca.qc.ircm.prohits2perseus.Main</main-class>
     <spring-boot.version>2.6.8</spring-boot.version>
     <testFx.version>4.0.15-alpha</testFx.version>
     <afterburner.version>1.7.0</afterburner.version>
     <spotbugs.version>4.0.0-beta1</spotbugs.version>
-    <javafx.version>11.0.2</javafx.version>
     <generate-property-names.version>0.5</generate-property-names.version>
     <opencsv.version>5.1</opencsv.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
@@ -81,6 +80,7 @@
     <linux.rpm.license.type>GPLv3+</linux.rpm.license.type>
     <linux.app.release>1</linux.app.release>
     <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
+    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -135,12 +135,12 @@
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
-      <version>${javafx.version}</version>
+      <version>${javac.version}</version>
     </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
-      <version>${javafx.version}</version>
+      <version>${javac.version}</version>
     </dependency>
     <dependency>
       <groupId>com.airhacks</groupId>
@@ -365,17 +365,6 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
-      <id>java14</id>
-      <activation>
-        <jdk>14</jdk>
-      </activation>
-      <properties>
-        <javafx.version>14-ea+1</javafx.version>
-        <!-- Fails in Java 14-ea+1 -->
-        <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
-      </properties>
-    </profile>
     <profile>
       <id>windows</id>
       <activation>
