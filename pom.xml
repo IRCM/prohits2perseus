@@ -39,14 +39,14 @@
     </license>
   </licenses>
   <scm>
-    <connection>scm:git:git@bitbucket.org:ircm/prohits2perseus.git</connection>
-    <developerConnection>scm:git:git@bitbucket.org:ircm/prohits2perseus.git</developerConnection>
-    <url>https://bitbucket.org/ircm/prohits2perseus</url>
+    <connection>scm:git:https://github.com/IRCM/prohits2perseus.git</connection>
+    <developerConnection>scm:git:https://github.com/IRCM/prohits2perseus.git</developerConnection>
+    <url>https://github.com/IRCM/prohits2perseus</url>
     <tag>HEAD</tag>
   </scm>
   <issueManagement>
-    <system>Bitbucket</system>
-    <url>https://bitbucket.org/ircm/prohits2perseus/issues</url>
+    <system>GitHub</system>
+    <url>https://github.com/IRCM/prohits2perseus/issues</url>
   </issueManagement>
   <properties>
     <resource.delimiter>$[*]</resource.delimiter>
