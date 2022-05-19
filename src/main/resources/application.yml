@@ -19,11 +19,11 @@ spring:
   application:
     name: prohits2perseus
   datasource:
-# MySQL database example.
-#     driver-class-name: com.mysql.jdbc.Driver
-#     url: jdbc:mysql://localhost/test
-#     username: dbuser
-#     password: dbpass
+    # MySQL database example.
+    #     driver-class-name: com.mysql.jdbc.Driver
+    #     url: jdbc:mysql://localhost/test
+    #     username: dbuser
+    #     password: dbpass
     platform: h2
     driver-class-name: org.h2.Driver
     url: jdbc:h2:mem:testdb;IGNORECASE=TRUE
@@ -37,7 +37,7 @@ spring:
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     properties:
-      hibernate.enable_lazy_load_no_trans : true
+      hibernate.enable_lazy_load_no_trans: true
 
 logging:
   file: ${user.home}/prohits2perseus/prohits2perseus.log
@@ -47,6 +47,8 @@ version: $[project.version]
 
 ---
 spring:
-  profiles: test
+  config:
+    activate:
+      on-profile: test
   jpa:
     show-sql: false

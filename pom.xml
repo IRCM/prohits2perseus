@@ -52,7 +52,7 @@
     <resource.delimiter>$[*]</resource.delimiter>
     <javac.version>11</javac.version>
     <main-class>ca.qc.ircm.prohits2perseus.Main</main-class>
-    <spring-boot.version>2.2.4.RELEASE</spring-boot.version>
+    <spring-boot.version>2.6.8</spring-boot.version>
     <testFx.version>4.0.15-alpha</testFx.version>
     <afterburner.version>1.7.0</afterburner.version>
     <spotbugs.version>4.0.0-beta1</spotbugs.version>
@@ -110,6 +110,12 @@
       <artifactId>testfx-junit</artifactId>
       <version>${testFx.version}</version>
       <scope>test</scope>
+      <exclusions>
+        <exclusion>
+          <groupId>junit</groupId>
+          <artifactId>junit</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>com.h2database</groupId>
