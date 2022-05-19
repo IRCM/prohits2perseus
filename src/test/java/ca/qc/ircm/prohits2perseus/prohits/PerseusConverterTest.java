@@ -28,24 +28,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @NonTransactionalTestAnnotations
 public class PerseusConverterTest {
   @Autowired
   private PerseusConverter perseusConverter;
-  @Rule
-  public TemporaryFolder folder = new TemporaryFolder();
   private List<Sample> samples = new ArrayList<>();
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     samples.add(perseus("test 1"));
     samples.add(perseus("test 2"));

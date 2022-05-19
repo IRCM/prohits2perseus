@@ -18,8 +18,8 @@
 package ca.qc.ircm.prohits2perseus.prohits;
 
 import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -30,16 +30,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Locale;
 import javafx.beans.value.ChangeListener;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestFxTestAnnotations
 public class ParseSampleCompareTaskTest extends ApplicationTest {
   @Autowired
@@ -56,7 +53,7 @@ public class ParseSampleCompareTaskTest extends ApplicationTest {
   private File file = new File("test");
   private Locale locale = Locale.ENGLISH;
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     task = factory.create(file, locale);
   }

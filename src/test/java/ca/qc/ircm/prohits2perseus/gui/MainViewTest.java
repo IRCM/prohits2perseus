@@ -26,15 +26,12 @@ import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestFxTestAnnotations
 public class MainViewTest extends ApplicationTest {
   private MainView view;
@@ -56,7 +53,7 @@ public class MainViewTest extends ApplicationTest {
   }
 
   @Test
-  @Ignore("Does not work on Mojave right now")
+  @Disabled("Does not work on Mojave right now")
   public void browse() throws Throwable {
     File file = new File(getClass().getResource("/comparison_matrix.csv").toURI());
     clickOn(".button.file");

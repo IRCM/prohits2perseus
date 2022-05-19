@@ -18,9 +18,10 @@
 package ca.qc.ircm.prohits2perseus.prohits;
 
 import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.eq;
@@ -47,18 +48,14 @@ import java.util.stream.IntStream;
 import javafx.beans.value.ChangeListener;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.RandomUtils;
-import org.junit.Before;
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestFxTestAnnotations
 public class ConvertTaskTest extends ApplicationTest {
   @Autowired
@@ -75,8 +72,8 @@ public class ConvertTaskTest extends ApplicationTest {
   private ChangeListener<String> messageChangeListener;
   @Mock
   private ChangeListener<Number> progressChangeListener;
-  @Rule
-  public TemporaryFolder folder = new TemporaryFolder();
+  @TempDir
+  Path temporaryFolder;
   private ConvertTask task;
   private File input;
   @Mock
@@ -93,9 +90,9 @@ public class ConvertTaskTest extends ApplicationTest {
   private Locale locale = Locale.ENGLISH;
   private AppResources resources = new AppResources(ConvertTask.class, locale);
 
-  @Before
+  @BeforeEach
   public void beforeTest() throws Throwable {
-    input = folder.newFile("input.csv");
+    input = temporaryFolder.resolve("input.csv").toFile();
     task = factory.create(input, samples, normalize, normalizeMetadata, locale);
     metadata.samplesStartIndex = 4;
     metadata.geneNameIndex = 1;
@@ -142,11 +139,11 @@ public class ConvertTaskTest extends ApplicationTest {
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(), any());
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(), any());
     assertEquals(1, outputs.size());
-    Path converterOutput = folder.getRoot().toPath().resolve("input.txt");
+    Path converterOutput = temporaryFolder.resolve("input.txt");
     assertTrue(outputs.contains(converterOutput.toFile()));
     assertTrue(Files.exists(converterOutput));
     compareContent(convertedContent, converterOutput);
-    Path normalizerOutput = folder.getRoot().toPath().resolve("input-normalized.txt");
+    Path normalizerOutput = temporaryFolder.resolve("input-normalized.txt");
     assertFalse(outputs.contains(normalizerOutput.toFile()));
     assertFalse(Files.exists(normalizerOutput));
   }
@@ -171,25 +168,25 @@ public class ConvertTaskTest extends ApplicationTest {
     verify(messageChangeListener, atLeastOnce()).changed(any(), any(), any());
     verify(progressChangeListener, atLeastOnce()).changed(any(), any(), any());
     assertEquals(2, outputs.size());
-    Path converterOutput = folder.getRoot().toPath().resolve("input.txt");
+    Path converterOutput = temporaryFolder.resolve("input.txt");
     assertTrue(outputs.contains(converterOutput.toFile()));
     assertTrue(Files.exists(converterOutput));
     compareContent(convertedContent, converterOutput);
-    Path normalizerOutput = folder.getRoot().toPath().resolve("input-normalized.txt");
+    Path normalizerOutput = temporaryFolder.resolve("input-normalized.txt");
     assertTrue(outputs.contains(normalizerOutput.toFile()));
     assertTrue(Files.exists(normalizerOutput));
     compareContent(normalizedContent, normalizerOutput);
   }
 
-  @Test(expected = IOException.class)
+  @Test
   public void call_ParseMetadataIOException() throws Throwable {
     when(parser.parseMetadata(any())).thenThrow(new IOException("test"));
-    task.call();
+    assertThrows(IOException.class, () -> task.call());
   }
 
-  @Test(expected = IOException.class)
+  @Test
   public void call_ParseIOException() throws Throwable {
     when(parser.parse(any())).thenThrow(new IOException("test"));
-    task.call();
+    assertThrows(IOException.class, () -> task.call());
   }
 }

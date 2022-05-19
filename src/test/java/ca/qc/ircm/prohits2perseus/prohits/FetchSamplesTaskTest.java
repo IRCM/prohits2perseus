@@ -18,10 +18,10 @@
 package ca.qc.ircm.prohits2perseus.prohits;
 
 import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.atLeastOnce;
 import static org.mockito.Mockito.verify;
@@ -35,16 +35,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import javafx.beans.value.ChangeListener;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.testfx.framework.junit.ApplicationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TransactionalFxTestAnnotations
 public class FetchSamplesTaskTest extends ApplicationTest {
   @Autowired
@@ -65,7 +62,7 @@ public class FetchSamplesTaskTest extends ApplicationTest {
   private FetchSamplesTask task;
   private Locale locale = Locale.ENGLISH;
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     metadata.samples = new ArrayList<>();
     task = factory.create(metadata, locale);

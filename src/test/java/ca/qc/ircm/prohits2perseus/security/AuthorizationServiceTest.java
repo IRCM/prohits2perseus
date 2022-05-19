@@ -17,18 +17,16 @@
 
 package ca.qc.ircm.prohits2perseus.security;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import ca.qc.ircm.prohits2perseus.sample.Sample;
 import ca.qc.ircm.prohits2perseus.sample.SampleRepository;
 import ca.qc.ircm.prohits2perseus.test.config.ServiceTestAnnotations;
-import java.security.AccessControlException;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @ServiceTestAnnotations
 public class AuthorizationServiceTest {
   @Autowired
@@ -37,12 +35,12 @@ public class AuthorizationServiceTest {
   private SampleRepository sampleRepository;
   private String originalUsername;
 
-  @Before
+  @BeforeEach
   public void beforeTest() {
     originalUsername = System.getProperty("user.name");
   }
 
-  @After
+  @AfterEach
   public void afterTest() {
     System.setProperty("user.name", originalUsername);
   }
@@ -54,11 +52,11 @@ public class AuthorizationServiceTest {
     service.checkRead(sample);
   }
 
-  @Test(expected = AccessControlException.class)
+  @Test
   public void checkRead_Denied() {
     System.setProperty("user.name", "smithj");
     Sample sample = sampleRepository.findById(10L).orElse(null);
-    service.checkRead(sample);
+    assertThrows(IllegalStateException.class, () -> service.checkRead(sample));
   }
 
   @Test
@@ -75,10 +73,10 @@ public class AuthorizationServiceTest {
     service.checkRead(sample);
   }
 
-  @Test(expected = AccessControlException.class)
+  @Test
   public void checkRead_NullUser() {
     System.setProperty("user.name", "");
     Sample sample = sampleRepository.findById(1L).orElse(null);
-    service.checkRead(sample);
+    assertThrows(IllegalStateException.class, () -> service.checkRead(sample));
   }
 }

@@ -18,8 +18,8 @@
 package ca.qc.ircm.prohits2perseus.gui;
 
 import static ca.qc.ircm.prohits2perseus.test.util.JavaFxTests.waitForPlatform;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import ca.qc.ircm.prohits2perseus.test.config.TestFxTestAnnotations;
 import java.util.concurrent.ExecutionException;
@@ -29,13 +29,10 @@ import javafx.concurrent.Task;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.junit.Ignore;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 import org.testfx.framework.junit.ApplicationTest;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @TestFxTestAnnotations
 public class ProgressDialogTest extends ApplicationTest {
   private ProgressDialog dialog;
@@ -90,7 +87,7 @@ public class ProgressDialogTest extends ApplicationTest {
   }
 
   @Test
-  @Ignore("Does not work on Mojave right now")
+  @Disabled("Does not work on Mojave right now")
   public void cancel() throws Throwable {
     BlockingTask task = new BlockingTask();
     dialog = dialog(task);

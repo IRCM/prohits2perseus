@@ -21,7 +21,6 @@ import ca.qc.ircm.prohits2perseus.project.Project;
 import ca.qc.ircm.prohits2perseus.project.ProjectData;
 import ca.qc.ircm.prohits2perseus.user.User;
 import ca.qc.ircm.prohits2perseus.user.UserRepository;
-import java.security.AccessControlException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -57,12 +56,12 @@ public class AuthorizationService {
 
     User user = currentUser();
     if (user == null) {
-      throw new AccessControlException("unkown user cannot access data " + data);
+      throw new IllegalStateException("unkown user cannot access data " + data);
     }
     Project project = data.getProject();
     if (user.getProjects().stream().filter(pr -> pr.getId().equals(project.getId())).findAny()
         .isEmpty()) {
-      throw new AccessControlException("user " + user + " cannot access data " + data);
+      throw new IllegalStateException("user " + user + " cannot access data " + data);
     }
   }
 }

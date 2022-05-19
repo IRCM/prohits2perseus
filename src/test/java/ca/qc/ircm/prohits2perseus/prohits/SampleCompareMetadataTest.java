@@ -20,11 +20,8 @@ package ca.qc.ircm.prohits2perseus.prohits;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import ca.qc.ircm.prohits2perseus.test.config.NonTransactionalTestAnnotations;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.junit.jupiter.api.Test;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 @NonTransactionalTestAnnotations
 public class SampleCompareMetadataTest {
   private SampleCompareMetadata metadata = new SampleCompareMetadata();
