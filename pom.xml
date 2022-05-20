@@ -57,7 +57,7 @@
     <afterburner.version>1.7.0</afterburner.version>
     <spotbugs.version>4.6.0</spotbugs.version>
     <generate-property-names.version>1.0</generate-property-names.version>
-    <opencsv.version>5.1</opencsv.version>
+    <opencsv.version>5.6</opencsv.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
     <javafx.finalName>${project.build.finalName}.jar</javafx.finalName>
     <jpackage>${java.home}/bin/jpackage</jpackage>
