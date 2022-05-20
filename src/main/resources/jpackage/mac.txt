@@ -9,7 +9,7 @@
 --java-options
 "$[jpackage.profileOption]"
 --app-version
-"$[project.version]"
+"$[app.version]"
 --copyright
 "$[copyright]"
 --description

@@ -11,7 +11,7 @@ msi
 --java-options
 "$[jpackage.profileOption]"
 --app-version
-"$[win.version]"
+"$[app.version]"
 --copyright
 "$[copyright]"
 --description
