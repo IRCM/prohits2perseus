@@ -55,7 +55,7 @@
     <spring-boot.version>2.6.8</spring-boot.version>
     <testFx.version>4.0.15-alpha</testFx.version>
     <afterburner.version>1.7.0</afterburner.version>
-    <spotbugs.version>4.0.0-beta1</spotbugs.version>
+    <spotbugs.version>4.6.0</spotbugs.version>
     <generate-property-names.version>1.0</generate-property-names.version>
     <opencsv.version>5.1</opencsv.version>
     <spring-boot-maven-plugin.version>${spring-boot.version}</spring-boot-maven-plugin.version>
