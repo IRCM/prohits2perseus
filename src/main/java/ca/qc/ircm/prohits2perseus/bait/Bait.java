@@ -35,7 +35,13 @@ import javax.persistence.Table;
 @Table(name = Bait.TABLE_NAME)
 @GeneratePropertyNames
 public class Bait implements Serializable, ProjectData {
+  /**
+   * Name of database table containing baits.
+   */
   public static final String TABLE_NAME = "Bait";
+  /**
+   * Serialization version number.
+   */
   private static final long serialVersionUID = 7069067891007593075L;
 
   /**
@@ -66,35 +72,79 @@ public class Bait implements Serializable, ProjectData {
     return "Bait [id=" + id + ", name=" + name + "]";
   }
 
+  /**
+   * Returns database identifier.
+   * 
+   * @return database identifier
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Sets database identifier.
+   * 
+   * @param id
+   *          database identifier
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Returns bait's name.
+   * 
+   * @return name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Sets bait's name.
+   * 
+   * @param name
+   *          name
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * Returns bait's project.
+   * 
+   * @return project
+   */
   @Override
   public Project getProject() {
     return project;
   }
 
+  /**
+   * Sets bait's project
+   * 
+   * @param project
+   *          project
+   */
   public void setProject(Project project) {
     this.project = project;
   }
 
+  /**
+   * Returns bait's gene identifier.
+   * 
+   * @return gene identifier
+   */
   public Long getGeneId() {
     return geneId;
   }
 
+  /**
+   * Sets bait's gene identifier.
+   * 
+   * @param geneId
+   *          gene identifier
+   */
   public void setGeneId(Long geneId) {
     this.geneId = geneId;
   }

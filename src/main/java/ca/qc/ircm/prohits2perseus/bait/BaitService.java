@@ -27,8 +27,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class BaitService {
+  /**
+   * Bait's repository.
+   */
   private final BaitRepository repository;
 
+  /**
+   * Create an instance of BaitService.
+   * 
+   * @param repository
+   *          bait's repository
+   */
   @Autowired
   protected BaitService(BaitRepository repository) {
     this.repository = repository;
