@@ -33,12 +33,8 @@ public class PerseusNormalizer {
    *
    * @param data
    *          data
-   * @param gene
-   *          gene
-   * @param geneIndex
-   *          index of gene column
-   * @param samplesStartIndex
-   *          index of first sample
+   * @param normalizeMetadata
+   *          how to normalize data
    * @return normalized Perseus data
    */
   public List<List<String>> normalize(List<List<String>> data,
