@@ -23,12 +23,33 @@ import javafx.util.StringConverter;
  * {@link StringConverter} that returns null when an exception is thrown by the supplied converter.
  */
 public class NullOnExceptionStringConverter<T> extends StringConverter<T> {
+  /**
+   * Converter to delegate method calls.
+   */
   private final StringConverter<T> converter;
 
+  /**
+   * Creates {@link NullOnExceptionStringConverter}.
+   * 
+   * @param converter
+   *          converter
+   */
   public NullOnExceptionStringConverter(StringConverter<T> converter) {
     this.converter = converter;
   }
 
+  /**
+   * Converts the string provided into an object defined by the supplied converter.
+   *
+   * <p>
+   * If an exception is thrown by the converter, <code>null</code> is returned.
+   * </p>
+   * 
+   * @param string
+   *          the {@code String} to convert
+   * @return an object representation of the string passed in, or <code>null</code> if the converter
+   *         threw an exception
+   */
   @Override
   public T fromString(String string) {
     try {
@@ -38,6 +59,19 @@ public class NullOnExceptionStringConverter<T> extends StringConverter<T> {
     }
   }
 
+  /**
+   * Converts the object provided into its string form. Format of the returned string is defined by
+   * the specific converter.
+   *
+   * <p>
+   * If an exception is thrown by the converter, <code>null</code> is returned.
+   * </p>
+   * 
+   * @param object
+   *          the object of type {@code T} to convert
+   * @return a string representation of the object passed in, or <code>null</code> if the converter
+   *         threw an exception
+   */
   @Override
   public String toString(T object) {
     try {
