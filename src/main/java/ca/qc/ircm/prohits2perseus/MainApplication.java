@@ -31,8 +31,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class MainApplication extends AbstractSpringBootJavafxApplication {
+  /**
+   * Logger.
+   */
   private static final Logger logger = LoggerFactory.getLogger(MainApplication.class);
 
+  /**
+   * Initializes the main application.
+   * 
+   * @throws Exception
+   *           Cannot initialize the main application
+   */
   @Override
   public void init() throws Exception {
     super.init();
@@ -42,6 +51,15 @@ public class MainApplication extends AbstractSpringBootJavafxApplication {
         .setInstanceSupplier(clazz -> applicationContext.getBean(clazz));
   }
 
+  /**
+   * Shows application's main windows.
+   *
+   * @param stage
+   *          the primary stage for this application, onto which the application scene can be set.
+   *          Applications may create other stages, if needed, but they will not be primary stages.
+   * @throws Exception
+   *           Could not show the main window
+   */
   @Override
   public void start(Stage stage) throws Exception {
     MainView view = new MainView();

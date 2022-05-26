@@ -25,8 +25,18 @@ import org.springframework.context.ConfigurableApplicationContext;
  * Java FX application using Spring Boot.
  */
 public abstract class AbstractSpringBootJavafxApplication extends Application {
+  /**
+   * Spring's application context.
+   */
   protected ConfigurableApplicationContext applicationContext;
 
+  /**
+   * Initializes Spring's {@link ConfigurableApplicationContext ApplicationContext}.
+   * 
+   * @throws Exception
+   *           if Spring's {@link ConfigurableApplicationContext ApplicationContext} cannot be
+   *           created
+   */
   @Override
   public void init() throws Exception {
     applicationContext =
@@ -34,6 +44,13 @@ public abstract class AbstractSpringBootJavafxApplication extends Application {
     applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
   }
 
+  /**
+   * Closes Spring's {@link ConfigurableApplicationContext ApplicationContext}.
+   * 
+   * @throws Exception
+   *           if Spring's {@link ConfigurableApplicationContext ApplicationContext} cannot be
+   *           closed
+   */
   @Override
   public void stop() throws Exception {
     super.stop();
