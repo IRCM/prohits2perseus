@@ -21,7 +21,7 @@
   <parent>
     <artifactId>parent</artifactId>
     <groupId>ca.qc.ircm</groupId>
-    <version>8</version>
+    <version>10</version>
     <relativePath>../parent/pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
@@ -225,6 +225,10 @@
               <exclude>ca/qc/ircm/prohits2perseus/test/**/*.java</exclude>
             </excludes>
           </configuration>
+        </plugin>
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.4.0</version>
         </plugin>
         <plugin>
           <groupId>org.springframework.boot</groupId>
