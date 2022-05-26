@@ -41,6 +41,9 @@ import javax.persistence.Transient;
 @Table(name = Sample.TABLE_NAME)
 @GeneratePropertyNames
 public class Sample implements Serializable, ProjectData {
+  /**
+   * Name of database table containing samples.
+   */
   public static final String TABLE_NAME = "Band";
   private static final long serialVersionUID = 1723224097702204200L;
 
@@ -83,59 +86,135 @@ public class Sample implements Serializable, ProjectData {
     return "Sample [id=" + id + ", name=" + name + "]";
   }
 
+  /**
+   * Returns database identifier.
+   *
+   * @return database identifier
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Sets database identifier.
+   *
+   * @param id
+   *          database identifier
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Returns sample's name.
+   *
+   * @return name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Sets sample's name.
+   *
+   * @param name
+   *          name
+   */
   public void setName(String name) {
     this.name = name;
   }
 
+  /**
+   * Returns sample's bait.
+   *
+   * @return bait
+   */
   public Bait getBait() {
     return bait;
   }
 
+  /**
+   * Sets sample's bait.
+   *
+   * @param bait
+   *          bait
+   */
   public void setBait(Bait bait) {
     this.bait = bait;
   }
 
+  /**
+   * Returns property containing if sample is a control.
+   *
+   * @return property containing if sample is a control
+   */
   public BooleanProperty controlProperty() {
     return control;
   }
 
+  /**
+   * Returns true if sample is a control, false otherwise.
+   *
+   * @return true if sample is a control, false otherwise
+   */
   public boolean isControl() {
     return control.get();
   }
 
+  /**
+   * Sets if sample is a control.
+   *
+   * @param control
+   *          control
+   */
   public void setControl(boolean control) {
     this.control.set(control);
   }
 
+  /**
+   * Returns property containing sample's name to use in Perseus.
+   *
+   * @return property containing sample's name to use in Perseus
+   */
   public StringProperty perseusProperty() {
     return perseus;
   }
 
+  /**
+   * Returns sample's name to use in Perseus.
+   *
+   * @return name
+   */
   public String getPerseus() {
     return perseus.get();
   }
 
+  /**
+   * Sets sample's name to use in Perseus.
+   *
+   * @param perseus
+   *          name
+   */
   public void setPerseus(String perseus) {
     this.perseus.set(perseus);
   }
 
+  /**
+   * Returns sample's project.
+   * 
+   * @return project
+   */
   @Override
   public Project getProject() {
     return project;
   }
 
+  /**
+   * Sets sample's project.
+   *
+   * @param project
+   *          project
+   */
   public void setProject(Project project) {
     this.project = project;
   }
