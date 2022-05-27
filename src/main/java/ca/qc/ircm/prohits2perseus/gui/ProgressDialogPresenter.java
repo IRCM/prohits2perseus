@@ -28,7 +28,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
-import javafx.scene.layout.BorderPane;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -39,18 +38,34 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class ProgressDialogPresenter {
+  /**
+   * If background task should be cancelled.
+   */
   private final BooleanProperty cancelledProperty = new SimpleBooleanProperty();
-  @FXML
-  private BorderPane layout;
+  /**
+   * Progress bar.
+   */
   @FXML
   ProgressBar progressBar;
+  /**
+   * Progress indicator.
+   */
   @FXML
   ProgressIndicator progressIndicator;
+  /**
+   * Progression message.
+   */
   @FXML
   Label message;
+  /**
+   * Cancel button.
+   */
   @FXML
   Button cancel;
 
+  /**
+   * Initializes progress dialog.
+   */
   @FXML
   private void initialize() {
     progressIndicator.progressProperty().bind(progressBar.progressProperty());
@@ -58,18 +73,52 @@ public class ProgressDialogPresenter {
     cancel.requestFocus();
   }
 
+  /**
+   * Returns progress property.
+   *
+   * <p>
+   * This value is usually between 0.0 and 1.0, where 1.0 indicates that the task completed.
+   * </p>
+   * 
+   * @return progress property
+   */
   public DoubleProperty progressProperty() {
     return progressBar.progressProperty();
   }
 
+  /**
+   * Returns message property.
+   *
+   * <p>
+   * This message is shown to user so he can have an idea of what the program is doing while he
+   * waits.
+   * </p>
+   * 
+   * @return message property
+   */
   public StringProperty messageProperty() {
     return message.textProperty();
   }
 
+  /**
+   * Returns cancelled property.
+   *
+   * <p>
+   * This property becomes true when the user click the cancel button.
+   * </p>
+   * 
+   * @return cancelled property
+   */
   public ReadOnlyBooleanProperty cancelledProperty() {
     return cancelledProperty;
   }
 
+  /**
+   * Users clicked the cancel button.
+   * 
+   * @param event
+   *          event
+   */
   @FXML
   private void cancel(Event event) {
     cancelledProperty.set(true);

@@ -37,11 +37,31 @@ import org.slf4j.LoggerFactory;
  * JavaFX application preloader.
  */
 public class MainPreloader extends Preloader {
+  /**
+   * Logger.
+   */
   private static final Logger logger = LoggerFactory.getLogger(Main.class);
+  /**
+   * Preloader's stage.
+   */
   private Stage stage;
+  /**
+   * Main container of this view.
+   */
   private HBox view = new HBox();
+  /**
+   * Message to show.
+   */
   private Label label = new Label();
 
+  /**
+   * Starts and shows preloader dialog.
+   * 
+   * @param stage
+   *          preloader's stage
+   * @throws Exception
+   *           could not create preloader dialog
+   */
   @Override
   public void start(Stage stage) throws Exception {
     this.stage = stage;
@@ -59,6 +79,12 @@ public class MainPreloader extends Preloader {
     stage.show();
   }
 
+  /**
+   * Hides preloader dialog.
+   * 
+   * @param info
+   *          notification that app started properly
+   */
   @Override
   public void handleApplicationNotification(PreloaderNotification info) {
     logger.warn("ApplicationStarted");
@@ -67,6 +93,14 @@ public class MainPreloader extends Preloader {
     }
   }
 
+  /**
+   * Show error message about why the app could not start.
+   * 
+   * @param info
+   *          information about the error that prevented app from starting normally
+   *
+   * @return always true since an error message is always shown to user
+   */
   @Override
   public boolean handleErrorNotification(ErrorNotification info) {
     logger.error("Could not start application", info.getCause());

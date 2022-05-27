@@ -78,42 +78,105 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class MainPresenter {
+  /**
+   * Logger.
+   */
   private static final Logger logger = LoggerFactory.getLogger(MainPresenter.class);
+  /**
+   * Main container of this view.
+   */
   @FXML
   private BorderPane view;
-  @FXML
-  private Pane filePane;
+  /**
+   * Location of a Prohits sample comparison file.
+   */
   @FXML
   private Label file;
+  /**
+   * Table containing samples parsed from Prohits sample comparison file.
+   */
   @FXML
   private TableView<Sample> samples;
+  /**
+   * Sample id column.
+   */
   @FXML
   private TableColumn<Sample, Long> sampleId;
+  /**
+   * Sample name column.
+   */
   @FXML
   private TableColumn<Sample, String> sampleName;
+  /**
+   * Bait column.
+   */
   @FXML
   private TableColumn<Sample, String> sampleBait;
+  /**
+   * If sample is a control column.
+   */
   @FXML
   private TableColumn<Sample, Boolean> sampleControl;
+  /**
+   * Sample name that will be used for Perseus.
+   */
   @FXML
   private TableColumn<Sample, String> samplePerseus;
-  @FXML
-  private Pane normalizationPane;
+  /**
+   * Checkbox to select if data should be normalized.
+   */
   @FXML
   private CheckBox normalization;
+  /**
+   * Pane containing gene selection.
+   */
   @FXML
   private Pane genePane;
+  /**
+   * Gene on which to normalize data.
+   */
   @FXML
   private TextField gene;
+  /**
+   * Show an error if gene cannot be found in Prohits sample comparison file.
+   */
   @FXML
   private Label geneError;
+  /**
+   * Prohits sample comparison file.
+   */
   private ObjectProperty<File> fileProperty = new SimpleObjectProperty<>();
+  /**
+   * Allows to select files.
+   */
   private FileChooser fileChooser = new FileChooser();
+  /**
+   * Samples present in Prohits sample comparison file.
+   */
   private SampleCompareMetadata metadata;
+  /**
+   * Factory to create {@link ParseSampleCompareTask}.
+   */
   private final ParseSampleCompareTaskFactory parseFactory;
+  /**
+   * Factory to create {@link FetchSamplesTask}.
+   */
   private final FetchSamplesTaskFactory fetchSamplesFactory;
+  /**
+   * Factory to create {@link ConvertTask}.
+   */
   private final ConvertTaskFactory convertTaskFactory;
 
+  /**
+   * Creates an instance of MainPresenter.
+   * 
+   * @param parseFactory
+   *          factory to create {@link ParseSampleCompareTask}
+   * @param fetchSamplesFactory
+   *          factory to create {@link FetchSamplesTask}
+   * @param convertTaskFactory
+   *          factory to create {@link ConvertTask}
+   */
   @Autowired
   protected MainPresenter(ParseSampleCompareTaskFactory parseFactory,
       FetchSamplesTaskFactory fetchSamplesFactory, ConvertTaskFactory convertTaskFactory) {
@@ -122,6 +185,9 @@ public class MainPresenter {
     this.convertTaskFactory = convertTaskFactory;
   }
 
+  /**
+   * Initializes presenter.
+   */
   @FXML
   private void initialize() {
     samples.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -148,6 +214,12 @@ public class MainPresenter {
     geneError.setVisible(false);
   }
 
+  /**
+   * Open file selection dialog to select Prohits sample comparison file.
+   * 
+   * @param event
+   *          event
+   */
   @FXML
   private void browse(ActionEvent event) {
     JavafxUtils.setValidInitialDirectory(fileChooser);
@@ -161,6 +233,17 @@ public class MainPresenter {
     }
   }
 
+  /**
+   * Parses samples present Prohits sample comparison file.
+   *
+   * <p>
+   * The parsing is done in a task since it could take some time to parse the file. A progress
+   * dialog is shown in the meantime.
+   * </p>
+   * 
+   * @param file
+   *          Prohits sample comparison file
+   */
   private void parseFile(File file) {
     logger.debug("parsing file {}", file);
     final AppResources resources = new AppResources(MainView.class, Locale.getDefault());
@@ -184,6 +267,20 @@ public class MainPresenter {
     new Thread(task).start();
   }
 
+  /**
+   * Fetches samples from the database. Samples fetched are those present in Prohits sample
+   * comparison file.
+   *
+   * <p>
+   * Since fetching samples from the database can take some time, it is done in a task. A progress
+   * dialog is shown in the meantime.
+   * </p>
+   * 
+   * @param metadata
+   *          metadata from parsed Prohits sample comparison file
+   * @param file
+   *          Prohits sample comparison file
+   */
   private void fetchSamples(SampleCompareMetadata metadata, File file) {
     logger.debug("fetching samples for file {}", file);
     final AppResources resources = new AppResources(MainView.class, Locale.getDefault());
@@ -220,6 +317,20 @@ public class MainPresenter {
     new Thread(task).start();
   }
 
+  /**
+   * Returns sample's name to use in Perseus.
+   *
+   * <p>
+   * Sample's name is based on the bait. If multiple samples have the same bait, an underscore and a
+   * number is appended to bait's name.
+   * </p>
+   * 
+   * @param sample
+   *          sample
+   * @param samples
+   *          all samples to resolve conflicts if many samples have the same bait
+   * @return sample's name to use in Perseus
+   */
   private String perseus(Sample sample, List<Sample> samples) {
     NumberFormat format = new DecimalFormat("00");
     String bait = sample.getBait().getName();
@@ -230,6 +341,11 @@ public class MainPresenter {
     return bait + "_" + format.format(lowerConflicts + 1);
   }
 
+  /**
+   * Validates that all samples have a different name for Perseus.
+   * 
+   * @return true if all samples pass validation, false otherwise
+   */
   @SuppressWarnings("unchecked")
   private boolean validateSamples() {
     List<TableCell<Sample, String>> cells = samples.lookupAll("." + PERSEUS + ".table-cell")
@@ -246,6 +362,11 @@ public class MainPresenter {
     return perseusCount.values().stream().filter(value -> value > 1).findAny().isPresent();
   }
 
+  /**
+   * Validate that selected gene is in Prohits sample comparison file.
+   * 
+   * @return true if gene is valid, false otherwise
+   */
   private boolean validateGene() {
     genePane.getStyleClass().remove("error");
     geneError.setVisible(false);
@@ -260,6 +381,20 @@ public class MainPresenter {
     return true;
   }
 
+  /**
+   * Converts Prohits sample comparison file into a format supported by Perseus.
+   *
+   * <p>
+   * Since the conversion can take some time, it is done in a task. A progress dialog is shown in
+   * the meantime.
+   * </p>
+   * <p>
+   * TODO Conversion should not be launched if validation fails.
+   * </p>
+   *
+   * @param event
+   *          event
+   */
   @FXML
   private void convert(ActionEvent event) {
     logger.debug("converting file {} to Perseus", file);
@@ -302,6 +437,12 @@ public class MainPresenter {
     new Thread(task).start();
   }
 
+  /**
+   * Show {@link AboutDialog}.
+   * 
+   * @param event
+   *          event
+   */
   @FXML
   private void about(ActionEvent event) {
     new AboutDialog(view.getScene().getWindow());

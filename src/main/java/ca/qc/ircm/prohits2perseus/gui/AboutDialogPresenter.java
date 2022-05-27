@@ -34,26 +34,50 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope(ConfigurableBeanFactory.SCOPE_PROTOTYPE)
 public class AboutDialogPresenter {
+  /**
+   * About message.
+   */
   @FXML
   private Label message;
+  /**
+   * Ok button.
+   */
   @FXML
   private Button ok;
+  /**
+   * Resource bundle for messages.
+   */
   @FXML
   private ResourceBundle resources;
+  /**
+   * Version of app.
+   */
   @Value("${version:unkown version}")
   private String version;
 
+  /**
+   * Initializes presenter.
+   */
   @FXML
   private void initialize() {
     message.setText(MessageFormat.format(resources.getString("message"), version));
     ok.requestFocus();
   }
 
+  /**
+   * Closes dialog.
+   * 
+   * @param event
+   *          close event
+   */
   @FXML
   private void close(Event event) {
     ok.getScene().getWindow().hide();
   }
 
+  /**
+   * Brings focus on default button.
+   */
   void focusOnDefault() {
     ok.requestFocus();
   }
