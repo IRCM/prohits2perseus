@@ -48,6 +48,14 @@ public class SampleCompareMetadata {
    */
   public int geneNameIndex;
 
+  /**
+   * Returns sample's id from sample's name inside Prohits sample comparison data.
+   * 
+   * @param sample
+   *          sample's name inside Prohits sample comparison data
+   * @return sample's id from sample's name inside Prohits sample comparison data or null if it
+   *         cannot be determined
+   */
   public Long id(String sample) {
     Pattern sampleNamePattern = Pattern.compile(SAMPLE_NAME_PATTERN);
     Matcher matcher = sampleNamePattern.matcher(sample);

@@ -23,17 +23,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Creates FetchSamplesTask.
+ * Creates {@link ParseSampleCompareTask}.
  */
 @Component
 public class ParseSampleCompareTaskFactory {
+  /**
+   * Parses Prohits sample comparison file.
+   */
   private final SampleCompareParser parser;
 
+  /**
+   * Creates an instance of ParseSampleCompareTaskFactory.
+   * 
+   * @param parser
+   *          parses Prohits sample comparison file
+   */
   @Autowired
   protected ParseSampleCompareTaskFactory(SampleCompareParser parser) {
     this.parser = parser;
   }
 
+  /**
+   * Creates {@link ParseSampleCompareTask}.
+   * 
+   * @param file
+   *          sample comparison file from Prohits
+   * @param locale
+   *          user's locale
+   * @return an instance of {@link ParseSampleCompareTask}
+   */
   public ParseSampleCompareTask create(File file, Locale locale) {
     return new ParseSampleCompareTask(file, locale, parser);
   }

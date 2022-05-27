@@ -37,17 +37,64 @@ import org.slf4j.LoggerFactory;
  * Converts Prohits sample comparison file into files readable by Perseus.
  */
 public class ConvertTask extends Task<List<File>> {
+  /**
+   * Logger.
+   */
   @SuppressWarnings("unused")
   private static final Logger logger = LoggerFactory.getLogger(ConvertTask.class);
+  /**
+   * Comparison file from Prohits.
+   */
   private final File input;
+  /**
+   * Samples present in comparison file.
+   */
   private final List<Sample> samples;
+  /**
+   * True if spectral counts should be normalized, false otherwise.
+   */
   private final boolean normalize;
+  /**
+   * How to normalize spectral counts, if {@link #normalize} is true.
+   */
   private final NormalizeMetadata normalizeMetadata;
+  /**
+   * User's locale.
+   */
   private final Locale locale;
+  /**
+   * Prohits sample comparison file parser.
+   */
   private final SampleCompareParser parser;
+  /**
+   * Converts sample data to Perseus format.
+   */
   private final PerseusConverter converter;
+  /**
+   * Normalizes spectral counts.
+   */
   private final PerseusNormalizer normalizer;
 
+  /**
+   * Creates an instance of ConvertTask.
+   *
+   * @param input
+   *          sample comparison file from Prohits
+   * @param samples
+   *          samples present in comparison file
+   * @param normalize
+   *          true if spectral counts are to be normalized, false otherwise
+   * @param normalizeMetadata
+   *          how to normalize
+   * @param locale
+   *          locale
+   * @param parser
+   *          Prohits sample comparison file parser
+   * @param converter
+   *          converts sample data to Perseus format
+   * @param normalizer
+   *          normalizes spectral counts
+   */
   protected ConvertTask(File input, List<Sample> samples, boolean normalize,
       NormalizeMetadata normalizeMetadata, Locale locale, SampleCompareParser parser,
       PerseusConverter converter, PerseusNormalizer normalizer) {
@@ -61,6 +108,13 @@ public class ConvertTask extends Task<List<File>> {
     this.normalizer = normalizer;
   }
 
+  /**
+   * Converts Prohits sample comparison file into files readable by Perseus.
+   * 
+   * @return files readable by Perseus
+   * @throws Exception
+   *           could not convert Prohits sample comparison file into files readable by Perseus
+   */
   @Override
   protected List<File> call() throws Exception {
     double step = 1.0 / (normalize ? 4 : 3);
@@ -95,6 +149,16 @@ public class ConvertTask extends Task<List<File>> {
     return outputs;
   }
 
+  /**
+   * Writes content into a tab delimited file.
+   * 
+   * @param output
+   *          tab delimited file
+   * @param content
+   *          content to write to file
+   * @throws IOException
+   *           could not write content to output
+   */
   private void writeTabDelimited(Path output, List<List<String>> content) throws IOException {
     try (Writer writer = Files.newBufferedWriter(output, StandardOpenOption.CREATE)) {
       for (List<String> line : content) {

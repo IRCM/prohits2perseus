@@ -36,7 +36,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SampleCompareParser {
+  /**
+   * Content of the header of gene id column in Prohits sample comparison file.
+   */
   private static final String GENE_ID_COLUMN = "Gene ID";
+  /**
+   * Content of the header of gene name column in Prohits sample comparison file.
+   */
   private static final String GENE_NAME_COLUMN = "Gene Name";
 
   /**
