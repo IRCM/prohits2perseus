@@ -45,6 +45,9 @@ public class Sample implements Serializable, ProjectData {
    * Name of database table containing samples.
    */
   public static final String TABLE_NAME = "Band";
+  /**
+   * Serialization version number.
+   */
   private static final long serialVersionUID = 1723224097702204200L;
 
   /**

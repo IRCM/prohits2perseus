@@ -25,6 +25,9 @@ import java.util.regex.Pattern;
  * Sample compare metadata.
  */
 public class SampleCompareMetadata {
+  /**
+   * Pattern used to extract id from sample's name.
+   */
   private static final String SAMPLE_NAME_PATTERN = "(\\d+) .*";
 
   /**
