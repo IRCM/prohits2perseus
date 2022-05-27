@@ -29,8 +29,17 @@ import javafx.stage.Window;
  * Progress dialog.
  */
 public class ProgressDialog {
+  /**
+   * Stage of this dialog.
+   */
   final Stage stage;
+  /**
+   * Presenter.
+   */
   final ProgressDialogPresenter presenter;
+  /**
+   * Task / Worker from which to obtain progression.
+   */
   private Worker<?> worker;
 
   /**
@@ -39,7 +48,7 @@ public class ProgressDialog {
    * @param owner
    *          window's owner
    * @param worker
-   *          worker
+   *          worker from which to obtain progression
    */
   public ProgressDialog(Window owner, Worker<?> worker) {
     this.worker = worker;
@@ -63,6 +72,9 @@ public class ProgressDialog {
     stage.show();
   }
 
+  /**
+   * Closes dialog.
+   */
   public void close() {
     worker.cancel();
     stage.close();

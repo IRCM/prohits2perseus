@@ -27,8 +27,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class SampleService {
+  /**
+   * Sample's repository.
+   */
   private final SampleRepository repository;
 
+  /**
+   * Creates an instance of SampleService.
+   * 
+   * @param repository
+   *          sample's repository
+   */
   @Autowired
   protected SampleService(SampleRepository repository) {
     this.repository = repository;

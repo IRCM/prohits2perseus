@@ -31,20 +31,34 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 public class AuthorizationService {
+  /**
+   * User's repository.
+   */
   private UserRepository userRepository;
 
+  /**
+   * Creates an instance of AuthorizationService.
+   * 
+   * @param userRepository
+   *          user's repository
+   */
   @Autowired
-  public AuthorizationService(UserRepository userRepository) {
+  protected AuthorizationService(UserRepository userRepository) {
     this.userRepository = userRepository;
   }
 
+  /**
+   * Returns current user, or null if user is not known.
+   * 
+   * @return current user, or null if user is not known
+   */
   private User currentUser() {
     String username = System.getProperty("user.name");
     return userRepository.findByUsername(username).orElse(null);
   }
 
   /**
-   * Validates that user has access to data.
+   * Validates that user has read access to data.
    *
    * @param data
    *          data

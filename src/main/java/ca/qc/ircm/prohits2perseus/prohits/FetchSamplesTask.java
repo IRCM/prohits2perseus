@@ -31,18 +31,47 @@ import org.slf4j.LoggerFactory;
  * Fetch samples from database base on ids.
  */
 public class FetchSamplesTask extends Task<List<Sample>> {
+  /**
+   * Logger.
+   */
   @SuppressWarnings("unused")
   private static final Logger logger = LoggerFactory.getLogger(FetchSamplesTask.class);
+  /**
+   * Samples metadata read from Prohits sample comparison file.
+   */
   private final SampleCompareMetadata metadata;
+  /**
+   * User's locale.
+   */
   private final Locale locale;
+  /**
+   * Sample service.
+   */
   private final SampleService service;
 
+  /**
+   * Creates an instance of FetchSamplesTask.
+   * 
+   * @param metadata
+   *          samples metadata read from Prohits sample comparison file
+   * @param locale
+   *          user's locale
+   * @param service
+   *          sample service
+   */
   protected FetchSamplesTask(SampleCompareMetadata metadata, Locale locale, SampleService service) {
     this.metadata = metadata;
     this.locale = locale;
     this.service = service;
   }
 
+  /**
+   * Returns samples from database that match samples read from Prohits sample comparison file.
+   * 
+   * @return samples from database that match samples read from Prohits sample comparison file
+   * @throws Exception
+   *           could not read samples from database
+   */
   @Override
   protected List<Sample> call() throws Exception {
     AppResources resources = new AppResources(FetchSamplesTask.class, locale);

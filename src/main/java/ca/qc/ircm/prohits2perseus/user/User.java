@@ -35,10 +35,13 @@ import javax.persistence.Table;
 @Table(name = User.TABLE_NAME)
 @GeneratePropertyNames
 public class User {
+  /**
+   * Name of database table containing users.
+   */
   public static final String TABLE_NAME = "User";
 
   /**
-   * Id.
+   * Database identifier.
    */
   @Id
   @Column(unique = true, nullable = false)
@@ -63,26 +66,59 @@ public class User {
     return "User [id=" + id + ", username=" + username + "]";
   }
 
+  /**
+   * Returns database identifier.
+   *
+   * @return database identifier
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Sets database identifier.
+   *
+   * @param id
+   *          database identifier
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Returns username.
+   *
+   * @return username
+   */
   public String getUsername() {
     return username;
   }
 
+  /**
+   * Sets username.
+   *
+   * @param username
+   *          username
+   */
   public void setUsername(String username) {
     this.username = username;
   }
 
+  /**
+   * Returns projects accessible by user.
+   *
+   * @return projects accessible by user
+   */
   public List<Project> getProjects() {
     return projects;
   }
 
+  /**
+   * Sets projects accessible by user.
+   *
+   * @param projects
+   *          projects accessible by user
+   */
   public void setProjects(List<Project> projects) {
     this.projects = projects;
   }

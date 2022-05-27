@@ -44,11 +44,27 @@ public class AppResources {
    */
   private final String prefix;
 
+  /**
+   * Creates AppResources.
+   * 
+   * @param baseName
+   *          resource bundle's base name
+   * @param locale
+   *          locale
+   */
   public AppResources(String baseName, Locale locale) {
     prefix = baseName.isEmpty() ? "" : baseName.replaceFirst(STRIP_KEY, "") + ".";
     resources = ResourceBundle.getBundle(BUNDLE, locale);
   }
 
+  /**
+   * Creates AppResources.
+   *
+   * @param baseClass
+   *          class from which to extract resource bundle's base name
+   * @param locale
+   *          locale
+   */
   public AppResources(Class<?> baseClass, Locale locale) {
     prefix = baseClass.getName().replaceFirst(STRIP_KEY, "") + ".";
     resources = ResourceBundle.getBundle(BUNDLE, locale);

@@ -23,17 +23,35 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
- * Creates FetchSamplesTask.
+ * Creates {@link FetchSamplesTask}.
  */
 @Component
 public class FetchSamplesTaskFactory {
+  /**
+   * Sample service.
+   */
   private final SampleService service;
 
+  /**
+   * Creates an instance of FetchSamplesTaskFactory.
+   * 
+   * @param service
+   *          sample service
+   */
   @Autowired
   protected FetchSamplesTaskFactory(SampleService service) {
     this.service = service;
   }
 
+  /**
+   * Creates {@link FetchSamplesTask}.
+   * 
+   * @param metadata
+   *          metadata base on sample comparison file from Prohits.
+   * @param locale
+   *          locale
+   * @return an instance of {@link FetchSamplesTask}
+   */
   public FetchSamplesTask create(SampleCompareMetadata metadata, Locale locale) {
     return new FetchSamplesTask(metadata, locale, service);
   }

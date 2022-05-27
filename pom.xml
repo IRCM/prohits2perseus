@@ -81,7 +81,6 @@
     <linux.rpm.license.type>GPLv3+</linux.rpm.license.type>
     <linux.app.release>1</linux.app.release>
     <build-helper-maven-plugin.version>3.0.0</build-helper-maven-plugin.version>
-    <maven.javadoc.failOnError>false</maven.javadoc.failOnError>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -228,7 +227,9 @@
         </plugin>
         <plugin>
           <artifactId>maven-javadoc-plugin</artifactId>
-          <version>3.4.0</version>
+          <configuration>
+            <show>private</show>
+          </configuration>
         </plugin>
         <plugin>
           <groupId>org.springframework.boot</groupId>

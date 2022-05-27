@@ -23,6 +23,12 @@ import ca.qc.ircm.prohits2perseus.gui.MainPreloader;
  * Starts program.
  */
 public class Main {
+  /**
+   * Main method called when program is started.
+   *
+   * @param args
+   *          program arguments
+   */
   public static void main(String[] args) {
     System.setProperty("javafx.preloader", MainPreloader.class.getName());
     javafx.application.Application.launch(MainApplication.class, args);

@@ -30,15 +30,16 @@ import org.springframework.stereotype.Component;
 public class PerseusNormalizer {
   /**
    * Normalizes Perseus data based on gene.
+   * 
+   * <p>
+   * Data is normalized by multiplying all data of each column by a constant so that the spectral
+   * counts are equals for the gene specified in {@link NormalizeMetadata#geneName}.
+   * </p>
    *
    * @param data
    *          data
-   * @param gene
-   *          gene
-   * @param geneIndex
-   *          index of gene column
-   * @param samplesStartIndex
-   *          index of first sample
+   * @param normalizeMetadata
+   *          how to normalize data
    * @return normalized Perseus data
    */
   public List<List<String>> normalize(List<List<String>> data,
@@ -49,6 +50,15 @@ public class PerseusNormalizer {
     return output;
   }
 
+  /**
+   * Removes ignored samples from data.
+   * 
+   * @param data
+   *          sample comparison data
+   * @param normalizeMetadata
+   *          how to normalize data
+   * @return data without ignored samples
+   */
   private List<List<String>> removeIgnoredSamples(List<List<String>> data,
       NormalizeMetadata normalizeMetadata) {
     List<Integer> removeIndexes =
@@ -62,6 +72,19 @@ public class PerseusNormalizer {
     return output;
   }
 
+  /**
+   * Normalizes sample comparison data.
+   *
+   * <p>
+   * Data is normalized by multiplying all data of each column by a constant so that the spectral
+   * counts are equals for the gene specified in {@link NormalizeMetadata#geneName}.
+   * </p>
+   *
+   * @param data
+   *          sample comparison data
+   * @param normalizeMetadata
+   *          how to normalize data
+   */
   private void normalizeData(List<List<String>> data, NormalizeMetadata normalizeMetadata) {
     int geneLineNumber = IntStream.range(1, data.size()).filter(
         i -> data.get(i).get(normalizeMetadata.geneNameIndex).equals(normalizeMetadata.geneName))
@@ -95,6 +118,15 @@ public class PerseusNormalizer {
     });
   }
 
+  /**
+   * Replace zeros with the minimal non-zero value of the same column multiplied by
+   * <code>0.9</code>.
+   * 
+   * @param data
+   *          sample comparison data
+   * @param normalizeMetadata
+   *          how to normalize data
+   */
   private void replaceZeros(List<List<String>> data, NormalizeMetadata normalizeMetadata) {
     List<Double> mins = IntStream.range(normalizeMetadata.samplesStartIndex, data.get(0).size())
         .mapToDouble(index -> {

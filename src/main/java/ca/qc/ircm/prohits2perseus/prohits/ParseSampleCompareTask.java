@@ -23,19 +23,45 @@ import java.util.Locale;
 import javafx.concurrent.Task;
 
 /**
- * Parses sample comparison file.
+ * Parses Prohits sample comparison file.
  */
 public class ParseSampleCompareTask extends Task<SampleCompareMetadata> {
+  /**
+   * Prohits sample comparison file.
+   */
   private final File file;
+  /**
+   * User's locale.
+   */
   private final Locale locale;
+  /**
+   * Parses Prohits sample comparison file.
+   */
   private final SampleCompareParser parser;
 
+  /**
+   * Creates an instance of ParseSampleCompareTask.
+   * 
+   * @param file
+   *          Prohits sample comparison file
+   * @param locale
+   *          user's locale
+   * @param parser
+   *          parses Prohits sample comparison file
+   */
   protected ParseSampleCompareTask(File file, Locale locale, SampleCompareParser parser) {
     this.file = file;
     this.locale = locale;
     this.parser = parser;
   }
 
+  /**
+   * Returns sample metadata parsed from Prohits sample comparison file.
+   * 
+   * @return sample metadata parsed from Prohits sample comparison file
+   * @throws Exception
+   *           could not extract sample metadata from Prohits sample comparison file
+   */
   @Override
   protected SampleCompareMetadata call() throws Exception {
     AppResources resources = new AppResources(ParseSampleCompareTask.class, locale);

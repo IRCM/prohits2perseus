@@ -30,10 +30,13 @@ import javax.persistence.Table;
 @Table(name = Project.TABLE_NAME)
 @GeneratePropertyNames
 public class Project {
+  /**
+   * Name of database table containing projects.
+   */
   public static final String TABLE_NAME = "Projects";
 
   /**
-   * Id.
+   * Database identifier.
    */
   @Id
   @Column(unique = true, nullable = false)
@@ -49,18 +52,40 @@ public class Project {
     return "Project [id=" + id + ", name=" + name + "]";
   }
 
+  /**
+   * Returns database identifier.
+   *
+   * @return database identifier
+   */
   public Long getId() {
     return id;
   }
 
+  /**
+   * Sets database identifier.
+   *
+   * @param id
+   *          database identifier
+   */
   public void setId(Long id) {
     this.id = id;
   }
 
+  /**
+   * Returns project's name.
+   *
+   * @return name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * Sets project's name.
+   *
+   * @param name
+   *          name
+   */
   public void setName(String name) {
     this.name = name;
   }

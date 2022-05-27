@@ -29,7 +29,13 @@ import javafx.stage.Window;
  * About dialog.
  */
 public class AboutDialog {
+  /**
+   * Stage of this dialog.
+   */
   private Stage stage;
+  /**
+   * Presenter.
+   */
   private AboutDialogPresenter presenter;
 
   /**
@@ -58,10 +64,16 @@ public class AboutDialog {
     stage.show();
   }
 
+  /**
+   * Shows dialog.
+   */
   public void show() {
     stage.show();
   }
 
+  /**
+   * Hides dialog.
+   */
   public void hide() {
     stage.hide();
   }
