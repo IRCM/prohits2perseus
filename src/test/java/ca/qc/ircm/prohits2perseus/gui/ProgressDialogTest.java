@@ -44,7 +44,6 @@ public class ProgressDialogTest {
 
   @Start
   private void start(Stage stage) throws Exception {
-    System.out.println("start method called");
     scene = new Scene(new BorderPane());
     stage.setScene(scene);
   }
