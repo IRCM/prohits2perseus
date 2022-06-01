@@ -104,7 +104,7 @@ public class FetchSamplesTaskTest {
   }
 
   @Test
-  public void call_IOException() throws Throwable {
+  public void call_IllegalArgumentException() throws Throwable {
     metadata.samples.add("test 1");
     metadata.samples.add("test 2");
     metadata.samples.add("test 3");
