@@ -223,6 +223,7 @@
             <excludes>
               <exclude>ca/qc/ircm/prohits2perseus/test/**/*.java</exclude>
             </excludes>
+            <argLine>--add-exports javafx.graphics/com.sun.javafx.application=ALL-UNNAMED</argLine>
           </configuration>
         </plugin>
         <plugin>
